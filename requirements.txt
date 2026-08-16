@@ -23,3 +23,5 @@ pdfplumber
 pymupdf
 
 requests
+
+streamlit-drawable-canvas
