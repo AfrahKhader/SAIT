@@ -25,3 +25,5 @@ pymupdf
 requests
 
 streamlit-drawable-canvas
+langchain-chroma
+chromadb
