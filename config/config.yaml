@@ -1,0 +1,43 @@
+# ============================================================
+# Socratic Tutor — main configuration
+# Change values here; no code editing required.
+# ============================================================
+
+llm:
+  # The tutor / main reasoning model (bound with the retriever tool)
+  tutor_model: "gpt-4o"
+  tutor_temperature: 0.3          # a little warmth helps question phrasing
+
+  # The cheap, fast model used only for guardrail classification
+  guard_model: "gpt-4o-mini"
+  guard_temperature: 0.0          # deterministic labels
+
+  # Embedding model for the vector store
+  embedding_model: "text-embedding-3-small"
+
+retriever:
+  k: 5                            # number of chunks to return per query
+  search_type: "similarity"
+
+documents:
+  pdf_dir: "./data"               # folder scanned for *.pdf
+  chunk_size: 1000
+  chunk_overlap: 200
+
+vectorstore:
+  persist_directory: "./chroma_db"
+  collection_name: "Algorithms"
+  rebuild: false                  # false = reuse existing store if present
+                                  # (avoids re-embedding + duplicate chunks)
+
+session:
+  thread_id: "student-session-1"  # one id = one continuous conversation
+
+guardrail:
+  min_length: 3                   # inputs shorter than this are treated as EMPTY
+
+# ---------------------------------------------
+misconceptions:
+  enabled: true
+  catalog_path: data/misconception_catalog.json
+  questions_path: data/questions.json

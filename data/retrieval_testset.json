@@ -1,0 +1,354 @@
+[
+  {
+    "query": "What is a simple graph?",
+    "answer": "A simple graph has distinct edges and pairs of distinct vertices.",
+    "expected_chunk_id": "b4f2bbdb1c81c663",
+    "expected_page": 0,
+    "source": "196a95604877d326c6586e60477b59d4_MIT6_006S20_lec9.pdf",
+    "source_excerpt": "0 1 \n2 3 \nG2 \n0 \n1 2 \nG3 \na \nb \ns \nc \nd \ne \nf \ng \n• Graph G =( V, E) is a set of vertices V and a set of pairs of vertices E ⊆ V × V . \n• Directed edges are ordered pairs, e.g., (u, v) for u, v ∈ V \n• Undirected edges are unordered pairs, e.g., {u, v} for u, v ∈ V i.e., (u, v) and (v, u) \n• In this class, we assume all graphs are simple: \n– edges are distinct, e.g., (u, v) only occurs once in E (though (v, u) may appear), and \n– edges are pairs of distinct vertices, e.g., u =6 v for all (u, v) ∈ E \n� \u0001 � \u0001|V | |V |– Simple implies |E| = O(|V |2), since |E|≤ for undirected, ≤ 2 for directed 2 2"
+  },
+  {
+    "query": "What is the time complexity for checking if an edge exists in an adjacency list using unsorted arrays?",
+    "answer": "Ω(|V|) time",
+    "expected_chunk_id": "76e2d8586694ea84",
+    "expected_page": 1,
+    "source": "6afd7e9a85d7d36e204533569f9fccf6_MIT6_006S20_r09.pdf",
+    "source_excerpt": "twice, so the size of an adjacency list representation implemented using arrays is Θ(|V | + |E|). \nA drawback of this representation is that determining whether your graph contains a given edge \n(u, v) might require Ω(|V |) time to step through the array representing the adjacency list of u or v. \nWe can overcome this obstacle by storing adjacency lists using hash tables instead of regular un-\nsorted arrays, which will support edge checking in expected O(1) time, still using only Θ(|V |+|E|) \nspace. However, we won’t need this operation for our algorithms, so we will assume the simpler \nunsorted-array-based adjacency list representation. Below are representations of G\n1 and G2 that \nuse a hash table for both the outer Adj Set and the inner adjacency lists Adj(u), using Python \ndictionaries: \n1 S1 = {0: {1}, S2 = {0: {1, 3, 4}, # 0 \n2 1: {2}, 1: {0}, # 1 \n3 2: {0}, 2: {3}, # 2 \n4 3: {4}} 3: {0, 2}, # 3 \n5 4: {0}} # 4"
+  },
+  {
+    "query": "What is the time complexity of selection sort?",
+    "answer": "Θ(n²)",
+    "expected_chunk_id": "4cdc88517e86dc3e",
+    "expected_page": 2,
+    "source": "6d1ae5278d02bbecb5c4428928b24194_MIT6_006S20_lec3.pdf",
+    "source_excerpt": "– Induction: assume correct for i, maximum is either the maximum of A[:i] or A[i], \nreturns correct index in either case. \n– S(1) = Θ(1), S(n)= S(n − 1) + Θ(1) \n∗ Substitution: S(n) = Θ(n), cn = Θ(1) + c(n − 1) =⇒ 1 = Θ(1)P n−1∗ Recurrence tree: chain of n nodes with Θ(1) work per node, i=0 1 = Θ(n) \n• selection sort analysis: \n– Base case: for i =0 , array has one element so is sorted \n– Induction: assume correct for i, last number of a sorted output is a largest number of \nthe array, and the algorithm puts one there; then A[:i] is sorted by induction \n– T (1) = Θ(1), T (n)= T (n − 1) + Θ(n) \n∗ Substitution: T (n) = Θ(n2), cn2 = Θ(n)+ c(n − 1)2 =⇒ c(2n − 1) = Θ(n)P n−1∗ Recurrence tree: chain of n nodes with Θ(i) work per node, i=0 i = Θ(n2)"
+  },
+  {
+    "query": "How can back edges be identified in a depth-first search?",
+    "answer": "By checking if a neighbor is an ancestor of the current vertex.",
+    "expected_chunk_id": "50816ea13dd1c6ab",
+    "expected_page": 1,
+    "source": "d9265b3b33d238ff914b0223ac8e7628_MIT6_006S20_r10.pdf",
+    "source_excerpt": "parent[v] = u). Otherwise, the edge from u to \nv is not a tree edge, and is either a back edge, forward edge, or cross edge depending respectively \non whether: u is a descendant of v, v is a descendant of u, or neither are descendants of each other, \nin the DFS tree. \nExercise: Draw a graph, run DFS from a vertex, and classify each edge relative to the DFS tree. \nShow that forward and cross edges cannot occur when running DFS on an undirected graph. \nExercise: How can you identify back edges computationally? \nSolution: While performing a depth-ﬁrst search, keep track of the set of ancestors of each vertex \nin the DFS tree during the search (in a direct access array or a hash table). When processing \nneighbor v of s in \ndfs(Adj, s), if v is an ancestor of s, then (s, v) is a back edge, and certiﬁes a \ncycle in the graph."
+  },
+  {
+    "query": "What is the time complexity of depth-first search?",
+    "answer": "O(|V| + |E|)",
+    "expected_chunk_id": "e2ea1d971987b4b1",
+    "expected_page": 0,
+    "source": "d9265b3b33d238ff914b0223ac8e7628_MIT6_006S20_r10.pdf",
+    "source_excerpt": "10 order.append(s) # O(1) amortized \n11 return parent, order \nHow fast is depth-ﬁrst search? A recursive dfs call is performed only when a vertex does not have \na parent pointer, and is given a parent pointer immediately before the recursive call. Thus dfs is \ncalled on each vertex at most once. Further, the amount of work done by each recursive search \nfrom vertex v is proportional to the out-degree deg(v) of v. Thus, the amount of work done by P depth-ﬁrst search is O( deg(v)) = O(|E|). Because the parent array returned has length |V |,\nv∈V \ndepth-ﬁrst search runs in O(|V | + |E|) time. \nExercise: Describe a graph on n vertices for which BFS and DFS would ﬁrst visit vertices in the \nsame order. \nSolution: Many possible solutions. Two solutions are a chain of vertices from v, or a star graph \nwith an edge from v to every other vertex."
+  },
+  {
+    "query": "What is the common data structure used to represent a graph's adjacencies?",
+    "answer": "Adjacency list",
+    "expected_chunk_id": "b0ac0df26e2afb6d",
+    "expected_page": 1,
+    "source": "6afd7e9a85d7d36e204533569f9fccf6_MIT6_006S20_r09.pdf",
+    "source_excerpt": "2 Recitation 9 \nGraph Representations \nThere are many ways to represent a graph in code. The most common way is to store a Set data \nstructure Adj mapping each vertex u to another data structure Adj(u) storing the adjacencies of \nv, i.e., the set of vertices that are accessible from v via a single outgoing edge. This inner data \nstructure is called an adjacency list. Note that we don’t store the edge pairs explicitly; we store \nonly the out-going neighbor vertices for each vertex. When vertices are uniquely labeled from 0 \nto |V |− 1, it is common to store the top-level Set Adj within a direct access array of length |V |, \nwhere array slot i points to the adjacency list of the vertex labeled i. Otherwise, if the vertices \nare not labeled in this way, it is also common to use a hash table to map each u ∈ V to Adj(u). \nThen, it is common to store each adjacency list Adj(u) as a simple unordered array of the outgoing"
+  },
+  {
+    "query": "What does a DFS tree not represent in an unweighted graph?",
+    "answer": "Shortest paths",
+    "expected_chunk_id": "7b290f86b293b138",
+    "expected_page": 0,
+    "source": "d9265b3b33d238ff914b0223ac8e7628_MIT6_006S20_r10.pdf",
+    "source_excerpt": "the search discovered them, together forming a DFS tree. However, unlike a BFS tree, a DFS tree \nwill not represent shortest paths in an unweighted graph. (Additionally, DFS returns an order on \nvertices discovered which will be discussed later.) Below is Python code implementing a recursive \ndepth-ﬁrst search for a graph represented using index-labeled adjacency lists. \n1 def dfs(Adj, s, parent = None, order = None): # Adj: adjacency list, s: start \n2 if parent is None: # O(1) initialize parent list \n3 parent = [None for v in Adj] # O(V) (use hash if unlabeled) \n4 parent[s] = s # O(1) root \n5 order = [] # O(1) initialize order array \n6 for v in Adj[s]: # O(Adj[s]) loop over neighbors \n7 if parent[v] is None: # O(1) parent not yet assigned \n8 parent[v] = s # O(1) assign parent \n9 dfs(Adj, v, parent, order) # Recursive call \n10 order.append(s) # O(1) amortized \n11 return parent, order \nHow fast is depth-ﬁrst search? A recursive dfs call is performed only when a vertex does not have"
+  },
+  {
+    "query": "Why does Dijkstra's algorithm work with non-negative edge weights?",
+    "answer": "It relies on the shortest path weight estimate being equal to the actual shortest path weight when a vertex is removed from the priority queue.",
+    "expected_chunk_id": "cdfe8b7f9f53f4bc",
+    "expected_page": 1,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "2 Recitation 13 \nWhy does Dijkstra’s algorithm compute shortest paths for a graph with non-negative edge weights? \nThe key observation is that shortest path weight estimate of vertex u equals its actual shortest path \nweight d(s, u) = δ(s, u) when u is removed from the priority queue. Then by the upper-bound \nproperty, d(s, u) = δ(s, u) will still hold at termination of the algorithm. A proof of correctness is \ndescribed in the lecture notes, and will not be repeated here. Instead, we will focus on analyzing \nrunning time for Dijkstra implemented using different priority queues. \nExercise: Construct a weighted graph with non-negative edge weights, and apply Dijkstra’s algo-\nrithm to ﬁnd shortest paths. Speciﬁcally list the key-value pairs stored in the priority queue after \neach iteration of the main loop, and highlight edges corresponding to constructed parent pointers. \nPriority Queues \nAn important aspect of Dijkstra’s algorithm is the use of a priority queue. The priority queue"
+  },
+  {
+    "query": "What does relaxing an edge maintain in shortest path estimates?",
+    "answer": "d(s, v) ≥ δ(s, v) for all v ∈ V",
+    "expected_chunk_id": "5216ad30c6ef1c0b",
+    "expected_page": 2,
+    "source": "77ff36ad54779575d9ba8d8687f91b5b_MIT6_006S20_r11.pdf",
+    "source_excerpt": "3 Recitation 11 \nTo relax a shortest path estimate d(s, v), we will relax an incoming edge to v, from another vertex \nu. If we maintain that d(s, u) always upper bounds the shortest path from s to u for all u ∈ V , \nthen the true shortest path weight δ(s, v) can’t be larger than d(s, u) + w(u, v) or else going to u \nalong a shortest path and traversing the edge (u, v) would be a shorter path2. Thus, if at any time \nd(s, u) + w(u, v) < d(s, v), we can relax the edge by setting d(s, v) = d(s, u) + w(u, v), strictly \nimproving our shortest path estimate. \n1 def try_to_relax(Adj, w, d, parent, u, v): \n2 if d[v] > d[u] + w(u, v): # better path through vertex u \n3 d[v] = d[u] + w(u, v) # relax edge with shorter path found \n4 parent[v] = u \nIf we only change shortest path estimates via relaxation, than we can prove that the shortest path \nestimates will never become smaller than true shortest paths. \nSafety Lemma: Relaxing an edge maintains d(s, v) ≥ δ(s, v) for all v ∈ V ."
+  },
+  {
+    "query": "What is a tree edge in depth-first search?",
+    "answer": "An edge that is part of the DFS tree, where parent[v] = u.",
+    "expected_chunk_id": "b2a8b06f33e84f9d",
+    "expected_page": 1,
+    "source": "d9265b3b33d238ff914b0223ac8e7628_MIT6_006S20_r10.pdf",
+    "source_excerpt": "4 for v in range(len(Adj)): # O(V) loop over vertices \n5 if parent[v] is None: # O(1) parent not yet assigned \n6 parent[v] = v # O(1) assign self as parent (a root) \n7 dfs(Adj, v, parent, order) # DFS from v (BFS can also be used) \n8 return parent, order \nFor historical reasons (primarily for its connection to topological sorting as discussed later) depth-\nﬁrst search is often used to refer to both a method to search a graph from a speciﬁc vertex, and \nas a method to search an entire (as in graph explore). You may do the same when answering \nproblems in this class. \nDFS Edge Classiﬁcation \nTo help prove things about depth-ﬁrst search, it can be useful to classify the edges of a graph in \nrelation to a depth-ﬁrst search tree. Consider a graph edge from vertex u to v. We call the edge a \ntree edge if the edge is part of the DFS tree (i.e. \nparent[v] = u). Otherwise, the edge from u to \nv is not a tree edge, and is either a back edge, forward edge, or cross edge depending respectively"
+  },
+  {
+    "query": "How can you check if a graph is acyclic?",
+    "answer": "For each edge (u, v), check if v is before u in reverse finishing order.",
+    "expected_chunk_id": "15b5287c2ceb4f77",
+    "expected_page": 3,
+    "source": "f3e349e0eb3288592289d2c81e0c4f4d_MIT6_006S20_lec10.pdf",
+    "source_excerpt": "∗ Thus the visit to v ﬁnishes before visiting u \n– If v visited before u: \n∗ u can’t be reached from v since graph is acyclic \n∗ Thus the visit to v ﬁnishes before visiting u \nCycle Detection \n• Full-DFS will ﬁnd a topological order if a graph G = (V, E) is acyclic \n• If reverse ﬁnishing order for Full-DFS is not a topological order, then G must contain a cycle \n• Check if G is acyclic: for each edge (u, v), check if v is before u in reverse ﬁnishing order \n• Can be done in O(|E|) time via a hash table or direct access array \n• To return such a cycle, maintain the set of ancestors along the path back to s in Full-DFS \n• Claim: If G contains a cycle, Full-DFS will traverse an edge from v to an ancestor of v. \n• Proof: Consider a cycle (v0, v1, . . . , vk, v0) in G \n– Without loss of generality, let v0 be the ﬁrst vertex visited by Full-DFS on the cycle \n– For each vi, before visit to vi ﬁnishes, will visit vi+1 and ﬁnish"
+  },
+  {
+    "query": "What is the time complexity of the algorithm described?",
+    "answer": "O(|V| + |E|)",
+    "expected_chunk_id": "4efd3f10780a8b27",
+    "expected_page": 4,
+    "source": "77ff36ad54779575d9ba8d8687f91b5b_MIT6_006S20_r11.pdf",
+    "source_excerpt": "ensures that a vertex not reachable from s will retain d(s, v) = +∞ at termination. Alterna-\ntively, consider any shortest path π = (v1, . . . , vm) from v1 = s to any vertex vm = v reach-\nable from s. The topological sort order ensures that edges of the path are relaxed in the order in \nwhich they appear in the path. Assume for induction that before edge (vi, vi+1) ∈ π is relaxed, \nd(s, vi) = δ(s, vi). Setting d(s, s) = 0 at the start provides a base case. Then relaxing edge \n(vi, vi+1) sets d(s, vi+1) = δ(s, vi) + w(vi, vi+1) = δ(s, vi+1), as sub-paths of shortest paths are \nalso shortest paths. Thus the procedure constructs shortest path weights as desired. Since depth-\nﬁrst search runs in linear time and the loops relax each edge exactly once, this algorithm takes \nO(|V | + |E|) time. \nExercise: You have been recruited by MIT to take part in a new part time student initiative where \nyou will take only one class per term. You don’t care about graduating; all you really want to do"
+  },
+  {
+    "query": "How can a shortest-path tree be constructed for weighted shortest paths?",
+    "answer": "In O(|V| + |E|) time using parent pointers for vertices with finite δ(s, v).",
+    "expected_chunk_id": "ef818dc1b3b712d6",
+    "expected_page": 2,
+    "source": "aa57a9785adf925bc85c1920f53755a0_MIT6_006S20_lec11.pdf",
+    "source_excerpt": "3 Lecture 11: Weighted Shortest Paths \nShortest-Paths Tree \n• For BFS, we kept track of parent pointers during search. Alternatively, compute them after! \n• If know δ(s, v) for all vertices v ∈ V , can construct shortest-path tree in O(|V | + |E|) time \n• For weighted shortest paths from s, only need parent pointers for vertices v with ﬁnite δ(s, v) \n• Initialize empty P and set P (s) = None \n• For each vertex u ∈ V where δ(s, v) is ﬁnite: \n– For each outgoing neighbor v ∈ Adj+(u): \n∗ If P (v) not assigned and δ(s, v) = δ(s, u) + w(u, v): \n· There exists a shortest path through edge (u, v), so set P (v) = u \n• Parent pointers may traverse cycles of zero weight. Mark each vertex in such a cycle. \n• For each unmarked vertex u ∈ V (including vertices later unmarked): \n– For each v ∈ Adj+(u) where v is marked and δ(s, v) = δ(s, u) + w(u, v): \n∗ Unmark vertices in cycle containing v by traversing parent pointers from v \n∗ Set P (v) = u, breaking the cycle"
+  },
+  {
+    "query": "What does Depth-First Search (DFS) solve?",
+    "answer": "Single Source Reachability",
+    "expected_chunk_id": "e7b9bebd7ea8ec89",
+    "expected_page": 1,
+    "source": "f3e349e0eb3288592289d2c81e0c4f4d_MIT6_006S20_lec10.pdf",
+    "source_excerpt": "2 Lecture 10: Depth-First Search \nDepth-First Search (DFS) \n• Searches a graph from a vertex s, similar to BFS \n• Solves Single Source Reachability, not SSSP. Useful for solving other problems (later!) \n• Return (not necessarily shortest) parent tree of parent pointers back to s \n• Idea! Visit outgoing adjacencies recursively, but never revisit a vertex \n• i.e., follow any path until you get stuck, backtrack until ﬁnding an unexplored path to explore \n• P (s) = None, then run visit(s), where \n• visit(u) : \n– for every v ∈ Adj(u) that does not appear in P : \n∗ set P (v) = u and recursively call visit(v) \n– (DFS ﬁnishes visiting vertex u, for use later!) \n• Example: Run DFS on G1 and/or G2 from a \nCorrectness \n• Claim: DFS visits v and correctly sets P (v) for every vertex v reachable from s \n• Proof: induct on k, for claim on only vertices within distance k from s \n– Base case (k = 0): P (s) is set correctly for s and s is visited"
+  },
+  {
+    "query": "What is the running time of Dijkstra's algorithm using a binary heap?",
+    "answer": "O((|V| + |E|) log |V|)",
+    "expected_chunk_id": "ea5f38a39e79f6bb",
+    "expected_page": 2,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "implementations. We’ve seen that a binary min heap can implement insertion and extract-min in \nO(log n) time. However, decreasing the key of a value stored in a priority queue requires ﬁnding \nthe value in the heap in order to change its key, which naively could take linear time. However, \nthis difﬁculty is easily addressed: each vertex can maintain a pointer to its stored location within \nthe heap, or the heap can maintain a mapping from values (vertices) to locations within the heap \n(you were asked to do this in Problem Set 5). Either solution can support ﬁnding a given value \nin the heap in constant time. Then, after decreasing the value’s key, one can restore the min heap \nproperty in logarithmic time by re-heapifying the tree. Since a binary heap can support each of the \nthree operations in O(log |V |) time, the running time of Dijkstra will be: \nT\nHeap = O((|V | + |E|) log |V |)."
+  },
+  {
+    "query": "What is the running time for Dijkstra's algorithm using a direct access array?",
+    "answer": "O(|V|² + |E|)",
+    "expected_chunk_id": "e2eb7837ee79ce96",
+    "expected_page": 1,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "time insertion and decrease-key, while remaining linear O(|V |) to ﬁnd and extract the vertex with \nminimum key. In either case, the running time for Dijkstra simpliﬁes to: \nT\nDict = O(|V |2 + |E|). \nThis is actually quite good! If the graph is dense, |E| = Ω(|V |2), this implementation is linear in \nthe size of the input! Below is a Python implementation of Dijkstra using a direct access array to \nimplement the priority queue."
+  },
+  {
+    "query": "What is the running time of Dijkstra's Algorithm for non-negative edge weights?",
+    "answer": "|V| log |V| + |E|",
+    "expected_chunk_id": "b9bebf33af940a1c",
+    "expected_page": 0,
+    "source": "d819e7f4568aced8d5b59e03db6c7b67_MIT6_006S20_lec13.pdf",
+    "source_excerpt": "Restrictions SSSP Algorithm \nGraph Weights Name Running Time O(·) Lecture \nGeneral Unweighted BFS |V | + |E| L09 \nL11 \nL12 \nL13 (Today!) \nDAG Any DAG Relaxation |V | + |E|\nGeneral Any Bellman-Ford \nDijkstra \n|V | · |E|\nGeneral Non-negative \nIntroduction to Algorithms: 6.006 \nMassachusetts Institute of Technology \nInstructors: Erik Demaine, Jason Ku, and Justin Solomon Lecture 13: Dijkstra’s Algorithm \nLecture 13: Dijkstra’s Algorithm \nReview \n• Single-Source Shortest Paths on weighted graphs \n• Previously: O(|V | + |E|)-time algorithms for small positive weights or DAGs \n• Last time: Bellman-Ford, O(|V ||E|)-time algorithm for general graphs with negative weights \n• Today: faster for general graphs with non-negative edge weights, i.e., for e ∈ E, w(e) ≥ 0 \n|V | log |V | + |E| \nNon-negative Edge Weights \n• Idea! Generalize BFS approach to weighted graphs: \n– Grow a sphere centered at source s \n– Repeatedly explore closer vertices before further ones"
+  },
+  {
+    "query": "What is the time complexity of merge sort?",
+    "answer": "Θ(n log n)",
+    "expected_chunk_id": "9e3dd1e573d6a6c2",
+    "expected_page": 4,
+    "source": "6d1ae5278d02bbecb5c4428928b24194_MIT6_006S20_lec3.pdf",
+    "source_excerpt": "15 A[b - 1] = L[i - 1] # O(1) \n16 i = i - 1 # O(1) \n17 else: # O(1) \n18 A[b - 1] = R[j - 1] # O(1) \n19 j = j - 1 # O(1) \n20 merge(L, R, A, i, j, a, b - 1) # S(n - 1) \n• merge analysis: \n– Base case: for n =0 , arrays are empty, so vacuously correct \n– Induction: assume correct for n, item in A[r] must be a largest number from remaining \npreﬁxes of L and R, and since they are sorted, taking largest of last items sufﬁces; \nremainder is merged by induction \n– S(0) = Θ(1), S(n)= S(n − 1)+Θ(1) =⇒ S(n) = Θ(n) \n• merge sort analysis: \n– Base case: for n =1 , array has one element so is sorted \n– Induction: assume correct for k < n, algorithm sorts smaller halves by induction, and \nthen merge merges into a sorted array as proved above. \n– T (1) = Θ(1), T (n)=2T (n/2) + Θ(n) \n∗ Substitution: Guess T (n) = Θ(n log n) \ncn log n = Θ(n)+2 c(n/2) log(n/2) =⇒ cn log(2) = Θ(n) \n∗ Recurrence Tree: complete binary tree with depth log2 n and n leaves, level i has 2i"
+  },
+  {
+    "query": "Who is Dijkstra's Algorithm named after?",
+    "answer": "Edsger Dijkstra",
+    "expected_chunk_id": "22f870c495e9c399",
+    "expected_page": 1,
+    "source": "d819e7f4568aced8d5b59e03db6c7b67_MIT6_006S20_lec13.pdf",
+    "source_excerpt": "2 Lecture 13: Dijkstra’s Algorithm \nDijkstra’s Algorithm \n• Named for famous Dutch computer scientist Edsger Dijkstra (actually D¨ykstra!) \n• Idea! Relax edges from each vertex in increasing order of distance from source s \n• Idea! Efﬁciently ﬁnd next vertex in the order using a data structure \n• Changeable Priority Queue Q on items with keys and unique IDs, supporting operations: \nQ.build(X) initialize Q with items in iterator X \nQ.delete min() remove an item with minimum key \nQ.decrease key(id, k) ﬁnd stored item with ID id and change key to k \n• Implement by cross-linking a Priority Queue Q0 and a Dictionary D mapping IDs into Q0 \n• Assume vertex IDs are integers from 0 to |V |− 1 so can use a direct access array for D \n• For brevity, say item x is the tuple (x.id, x.key) \n• Set d(s, v)= ∞ for all v ∈ V , then set d(s, s)=0 \n• Build changeable priority queue Q with an item (v, d(s, v)) for each vertex v ∈ V"
+  },
+  {
+    "query": "What does depth-first search return for vertices reachable from a queried vertex?",
+    "answer": "A set of parent pointers forming a DFS tree.",
+    "expected_chunk_id": "9c08d2e06d24b856",
+    "expected_page": 0,
+    "source": "d9265b3b33d238ff914b0223ac8e7628_MIT6_006S20_r10.pdf",
+    "source_excerpt": "Introduction to Algorithms: 6.006 \nMassachusetts Institute of Technology \nInstructors: Erik Demaine, Jason Ku, and Justin Solomon Recitation 10 \nRecitation 10 \nDepth-First Search \nA breadth-ﬁrst search discovers vertices reachable from a queried vertex s level-by-level outward \nfrom s. A depth-ﬁrst search (DFS) also ﬁnds all vertices reachable from s, but does so by search-\ning undiscovered vertices as deep as possible before exploring other branches. Instead of exploring \nall neighbors of s one after another as in a breadth-ﬁrst search, depth-ﬁrst searches as far as possi-\nble from the ﬁrst neighbor of s before searching any other neighbor of s. Just as with breadth-ﬁrst \nsearch, depth-ﬁrst search returns a set of parent pointers for vertices reachable from s in the order \nthe search discovered them, together forming a DFS tree. However, unlike a BFS tree, a DFS tree \nwill not represent shortest paths in an unweighted graph. (Additionally, DFS returns an order on"
+  },
+  {
+    "query": "What data structure is often used in Dijkstra's algorithm to find the smallest minimum weight path estimate?",
+    "answer": "Minimum priority queue",
+    "expected_chunk_id": "55c0a0420c2ae358",
+    "expected_page": 0,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "source. Dijkstra’s algorithm discretizes this continuous process by repeatedly relaxing edges from \na vertex whose minimum weight path estimate is smallest among vertices whose out-going edges \nhave not yet been relaxed. In order to efﬁciently ﬁnd the smallest minimum weight path estimate, \nDijkstra’s algorithm is often presented in terms of a minimum priority queue data structure. Dijk-\nstra’s running time then depends on how efﬁciently the priority queue can perform its supported \noperations. Below is Python code for Dijkstra’s algorithm in terms of priority queue operations. \n1 def dijkstra(Adj, w, s): \n2 d = [float(’inf’) for _ in Adj] # shortest path estimates d(s, v) \n3 parent = [None for _ in Adj] # initialize parent pointers \n4 d[s], parent[s] = 0, s # initialize source \n5 Q = PriorityQueue() # initialize empty priority queue \n6 V = len(Adj) # number of vertices \n7 for v in range(V): # loop through vertices \n8 Q.insert(v, d[v]) # insert vertex-estimate pair"
+  },
+  {
+    "query": "What does the BFS algorithm return for each vertex?",
+    "answer": "A parent label for each vertex in the direction of a shortest path back to the starting vertex.",
+    "expected_chunk_id": "595f5323b1330a53",
+    "expected_page": 2,
+    "source": "6afd7e9a85d7d36e204533569f9fccf6_MIT6_006S20_r09.pdf",
+    "source_excerpt": "By computing each level from the preceding level, a growing frontier of vertices will be explored \naccording to their shortest path length from s. \nBelow is Python code implementing breadth-ﬁrst search for a graph represented using index-\nlabeled adjacency lists, returning a parent label for each vertex in the direction of a shortest path \nback to s. Parent labels (pointers) together determine a BFS tree from vertex s, containing some \nshortest path from s to every other vertex in the graph. \n1 def bfs(Adj, s): # Adj: adjacency list, s: starting vertex \n2 parent = [None for v in Adj] # O(V) (use hash if unlabeled) \n3 parent[s] = s # O(1) root \n4 level = [[s]] # O(1) initialize levels \n5 while 0 < len(level[-1]): # O(?) last level contains vertices \n6 level.append([]) # O(1) amortized, make new level \n7 for u in level[-2]: # O(?) loop over last full level \n8 for v in Adj[u]: # O(Adj[u]) loop over neighbors \n9 if parent[v] is None: # O(1) parent not yet assigned"
+  },
+  {
+    "query": "What is the time complexity of the algorithm for solving SSSP with non-negative edge weights?",
+    "answer": "O(|V| log |V| + |E|)",
+    "expected_chunk_id": "9f24b8566d5900f9",
+    "expected_page": 0,
+    "source": "d819e7f4568aced8d5b59e03db6c7b67_MIT6_006S20_lec13.pdf",
+    "source_excerpt": "|V | log |V | + |E| \nNon-negative Edge Weights \n• Idea! Generalize BFS approach to weighted graphs: \n– Grow a sphere centered at source s \n– Repeatedly explore closer vertices before further ones \n– But how to explore closer vertices if you don’t know distances beforehand? :( \n• Observation 1: If weights non-negative, monotonic distance increase along shortest paths \n– i.e., if vertex u appears on a shortest path from s to v, then δ(s, u) ≤ δ(s, v) \n– Let Vx ⊂ V be the subset of vertices reachable within distance ≤ x from s \n– If v ∈ Vx, then any shortest path from s to v only contains vertices from Vx \n– Perhaps grow Vx one vertex at a time! (but growing for every x is slow if weights large) \n• Observation 2: Can solve SSSP fast if given order of vertices in increasing distance from s \n– Remove edges that go against this order (since cannot participate in shortest paths) \n– May still have cycles if zero-weight edges: repeatedly collapse into single vertices"
+  },
+  {
+    "query": "What is the purpose of relaxing vertices in an algorithm?",
+    "answer": "To decrease shortest path estimates.",
+    "expected_chunk_id": "3d2151210a01c078",
+    "expected_page": 1,
+    "source": "77ff36ad54779575d9ba8d8687f91b5b_MIT6_006S20_r11.pdf",
+    "source_excerpt": "4 d[s], parent[s] = 0, s # initialize source \n5 while True: # repeat forever! \n6 relax some d[v] ?? # relax a shortest path estimate d(s, v) \n7 return d, parent # return weights, paths via parents \nThere are a number of problems with this algorithm, not least of which is that it never terminates! \nBut if we can repeatedly decrease each shortest path estimates to fully relax each d(s, v), we will \nhave found shortest paths. How do we ‘relax’ vertices and when do we stop relaxing?"
+  },
+  {
+    "query": "What type of edge weights does Dijkstra's Algorithm require?",
+    "answer": "Non-negative edge weights",
+    "expected_chunk_id": "70bc2b01983ac267",
+    "expected_page": 0,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "Introduction to Algorithms: 6.006 \nMassachusetts Institute of Technology \nInstructors: Erik Demaine, Jason Ku, and Justin Solomon Recitation 13 \nRecitation 13 \nDijkstra’s Algorithm \nDijkstra is possibly the most commonly used weighted shortest paths algorithm; it is asymptoti-\ncally faster than Bellman-Ford, but only applies to graphs containing non-negative edge weights, \nwhich appear often in many applications. The algorithm is fairly intuitive, though its implemen-\ntation can be more complicated than that of other shortest path algorithms. Think of a weighted \ngraph as a network of pipes, each with non-negative length (weight). Then turn on a water faucet at \na source vertex s. Assuming the water ﬂowing from the faucet traverses each pipe at the same rate, \nthe water will reach each pipe intersection vertex in the order of their shortest distance from the \nsource. Dijkstra’s algorithm discretizes this continuous process by repeatedly relaxing edges from"
+  },
+  {
+    "query": "What is a graph defined as in terms of vertices and edges?",
+    "answer": "A graph G = (V, E) is a set of vertices V and a set of pairs of vertices E ⊆ V × V.",
+    "expected_chunk_id": "fcf754ae621f88ea",
+    "expected_page": 0,
+    "source": "196a95604877d326c6586e60477b59d4_MIT6_006S20_lec9.pdf",
+    "source_excerpt": "Introduction to Algorithms: 6.006 \nMassachusetts Institute of Technology \nInstructors: Erik Demaine, Jason Ku, and Justin Solomon Lecture 9: Breadth-First Search \nLecture 9: Breadth-First Search \nNew Unit: Graphs! \n• Quiz 1 next week covers lectures L01 - L08 on Data Structures and Sorting \n• Today, start new unit, lectures L09 - L14 on Graph Algorithms \nGraph Applications \n• Why? Graphs are everywhere! \n• any network system has direct connection to graphs \n• e.g., road networks, computer networks, social networks \n• the state space of any discrete system can be represented by a transition graph \n• e.g., puzzle & games like Chess, Tetris, Rubik’s cube \n• e.g., application workﬂows, speciﬁcations \nGraph Deﬁnitions \nG1 \n0 1 \n2 3 \nG2 \n0 \n1 2 \nG3 \na \nb \ns \nc \nd \ne \nf \ng \n• Graph G =( V, E) is a set of vertices V and a set of pairs of vertices E ⊆ V × V . \n• Directed edges are ordered pairs, e.g., (u, v) for u, v ∈ V"
+  },
+  {
+    "query": "What is the time complexity of breadth-first search?",
+    "answer": "O(|V| + |E|)",
+    "expected_chunk_id": "c6f4004d696b1680",
+    "expected_page": 2,
+    "source": "6afd7e9a85d7d36e204533569f9fccf6_MIT6_006S20_r09.pdf",
+    "source_excerpt": "7 for u in level[-2]: # O(?) loop over last full level \n8 for v in Adj[u]: # O(Adj[u]) loop over neighbors \n9 if parent[v] is None: # O(1) parent not yet assigned \n10 parent[v] = u # O(1) assign parent from level[-2] \n11 level[-1].append(v) # O(1) amortized, add to border \n12 return parent \nHow fast is breadth-ﬁrst search? In particular, how many times can the inner loop on lines 9–11 \nbe executed? A vertex is added to any level at most once in line 11, so the loop in line 7 processes \neach vertex v at most once. The loop in line 8 cycles through all deg(v) outgoing edges from P vertex v. Thus the inner loop is repeated at most O( deg(v)) = O(|E|) times. Because the \nv∈V \nparent array returned has length |V |, breadth-ﬁrst search runs in O(|V | + |E|) time."
+  },
+  {
+    "query": "What is a directed acyclic graph?",
+    "answer": "A directed graph containing no directed cycle.",
+    "expected_chunk_id": "0071b7586522095d",
+    "expected_page": 2,
+    "source": "d9265b3b33d238ff914b0223ac8e7628_MIT6_006S20_r10.pdf",
+    "source_excerpt": "3 Recitation 10 \nTopological Sort \nA directed graph containing no directed cycle is called a directed acyclic graph or a DAG. A \ntopological sort of a directed acyclic graph G = (V, E) is a linear ordering of the vertices such \nthat for each edge (u, v) in E, vertex u appears before vertex v in the ordering. In the dfs func-\ntion, vertices are added to the order list in the order in which their recursive DFS call ﬁnishes. If \nthe graph is acyclic, the order returned by dfs (or graph search) is the reverse of a topolog-\nical sort order. Proof by cases. One of dfs(u) or dfs(v) is called ﬁrst. If dfs(u) was called \nbefore dfs(v), dfs(v) will start and end before dfs(u) completes, so v will appear before u \nin order. Alternativel y, if dfs(v) was called before dfs(u), dfs(u) cannot be called before \ndfs(v) completes, or else a path from v to u would exist, contradicting that the graph is acyclic;"
+  },
+  {
+    "query": "What is the distance from vertex u to vertex v in a graph?",
+    "answer": "The distance δ(u, v) is the minimum length of any path from u to v.",
+    "expected_chunk_id": "e8bac3f3836f2f6a",
+    "expected_page": 2,
+    "source": "196a95604877d326c6586e60477b59d4_MIT6_006S20_lec9.pdf",
+    "source_excerpt": "3 Lecture 9: Breadth-First Search \nPaths \n• A path is a sequence of vertices p =( v1, v2, . . . , vk) where (vi, vi+1) ∈ E for all 1 ≤ i < k. \n• A path is simple if it does not repeat vertices2 \n• The length `(p) of a path p is the number of edges in the path \n• The distance δ(u, v) from u ∈ V to v ∈ V is the minimum length of any path from u to v, \ni.e., the length of a shortest path from u to v \n(by convention, δ(u, v)= ∞ if u is not connected to v) \nGraph Path Problems \n• There are many problems you might want to solve concerning paths in a graph: \n• SINGLE PAIR REACHABILITY (G, s, t): is there a path in G from s ∈ V to t ∈ V ? \n• SINGLE PAIR SHORTEST PATH(G, s, t): return distance δ(s, t), and \na shortest path in G =( V, E) from s ∈ V to t ∈ V \n• SINGLE SOURCE SHORTEST PATHS (G, s): return δ(s, v) for all v ∈ V , and \na shortest-path tree containing a shortest path from s to every v ∈ V (deﬁned below) \n• Each problem above is at least as hard as every problem above it"
+  },
+  {
+    "query": "What is the time complexity of insertion sort?",
+    "answer": "Θ(n²)",
+    "expected_chunk_id": "e06e1e8ee66bcb93",
+    "expected_page": 3,
+    "source": "6d1ae5278d02bbecb5c4428928b24194_MIT6_006S20_lec3.pdf",
+    "source_excerpt": "swapping last two elements allows us to sort A[:i] by induction \n– S(1) = Θ(1), S(n)= S(n − 1)+Θ(1) =⇒ S(n) = Θ(n) \n• insertion sort analysis: \n– Base case: for i =0 , array has one element so is sorted \n– Induction: assume correct for i, algorithm sorts A[:i] by induction, and then \ninsert last correctly sorts the rest as proved above \n– T (1) = Θ(1), T (n)= T (n − 1) + Θ(n) =⇒ T (n) = Θ(n2)"
+  },
+  {
+    "query": "What is the time complexity of Breadth-First Search for Single Source Shortest Paths?",
+    "answer": "O(|V| + |E|)",
+    "expected_chunk_id": "7845bf13dacd427a",
+    "expected_page": 0,
+    "source": "f3e349e0eb3288592289d2c81e0c4f4d_MIT6_006S20_lec10.pdf",
+    "source_excerpt": "Introduction to Algorithms: 6.006 \nMassachusetts Institute of Technology \nInstructors: Erik Demaine, Jason Ku, and Justin Solomon Lecture 10: Depth-First Search \nLecture 10: Depth-First Search \nPreviously \n• Graph deﬁnitions (directed/undirected, simple, neighbors, degree) \n• Graph representations (Set mapping vertices to adjacency lists) \n• Paths and simple paths, path length, distance, shortest path \n• Graph Path Problems \n– Single Pair Reachability(G,s,t) \n– Single Source Reachability(G,s) \n– Single Pair Shortest Path(G,s,t) \n– Single Source Shortest Paths(G,s) (SSSP) \n• Breadth-First Search (BFS) \n– algorithm that solves Single Source Shortest Paths \n– with appropriate data structures, runs in O(|V | + |E|) time (linear in input size) \nExamples \nG1 \na \nd \nb \ne \nc \nf \nG2 \na \nd \nb \ne \nc \nf"
+  },
+  {
+    "query": "What is the outgoing neighbor set of a vertex u in a graph?",
+    "answer": "Adj+(u) = {v ∈ V | (u, v) ∈ E}",
+    "expected_chunk_id": "fe04a795e0dda83c",
+    "expected_page": 1,
+    "source": "196a95604877d326c6586e60477b59d4_MIT6_006S20_lec9.pdf",
+    "source_excerpt": "2 Lecture 9: Breadth-First Search \nNeighbor Sets/Adjacencies \n• The outgoing neighbor set of u ∈ V is Adj+(u)= {v ∈ V | (u, v) ∈ E} \n• The incoming neighbor set of u ∈ V is Adj−(u)= {v ∈ V | (v, u) ∈ E} \n• The out-degree of a vertex u ∈ V is deg+(u)= |Adj+(u)| \n• The in-degree of a vertex u ∈ V is deg−(u)= |Adj−(u)| \n• For undirected graphs, Adj−(u) = Adj+(u) and deg−(u) = deg+(u) \n• Dropping superscript defaults to outgoing, i.e., Adj(u) = Adj+(u) and deg(u) = deg+(u) \nGraph Representations \n• To store a graph G =( V, E), we need to store the outgoing edges Adj(u) for all u ∈ V \n• First, need a Set data structure Adj to map u to Adj(u) \n• Then for each u, need to store Adj(u) in another data structure called an adjacency list \n• Common to use direct access array or hash table for Adj, since want lookup fast by vertex \n• Common to use array or linked list for each Adj(u) since usually only iteration is needed1"
+  },
+  {
+    "query": "What operations does a priority queue support in Dijkstra's algorithm?",
+    "answer": "insert(val, key), extract min(), and decrease key(val, new key)",
+    "expected_chunk_id": "6d6a99f6f226f8c4",
+    "expected_page": 1,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "Priority Queues \nAn important aspect of Dijkstra’s algorithm is the use of a priority queue. The priority queue \ninterface used here differs slightly from our presentation of priority queues earlier in the term. \nHere, a priority queue maintains a set of key-value pairs, where vertex v is a value and d(s, v) is its \nkey. Aside from empty initialization, the priority queue supports three operations: \ninsert(val, \nkey) adds a key-value pair to the queue, extract min() removes and returns a value from the \nqueue whose key is minimum, and decrease key(val, new key) which reduces the key of \na given value stored in the queue to the provided new key. The running time of Dijkstra depends \non the running times of these operations. Speciﬁcally, if Ti, Te, and Td are the respective running \ntimes for inserting a key-value pair, extracting a value with minimum key, and decreasing the key \nof a value, the running time of Dijkstra will be: \nT\nDijkstra = O(|V |· Ti + |V |· Te + |E|· Td)."
+  },
+  {
+    "query": "What is the size of an adjacency list representation implemented using arrays?",
+    "answer": "Θ(|V| + |E|)",
+    "expected_chunk_id": "be2600a404da4fb4",
+    "expected_page": 1,
+    "source": "6afd7e9a85d7d36e204533569f9fccf6_MIT6_006S20_r09.pdf",
+    "source_excerpt": "are not labeled in this way, it is also common to use a hash table to map each u ∈ V to Adj(u). \nThen, it is common to store each adjacency list Adj(u) as a simple unordered array of the outgoing \nadjacencies. For example, the following are adjacency list representations of G1 and G2, using a \ndirect access array for the top-level Set and an array for each adjacency list. \n1 A1 = [[1], A2 = [[1, 4, 3], # 0 \n2 [2], [0], # 1 \n3 [0], [3], # 2 \n4 [4], [0, 2], # 3 \n5 []] [0]] # 4 \nUsing an array for an adjacency list is a perfectly good data structures if all you need to do is loop \nover the edges incident to a vertex (which will be the case for all algorithms we will discuss in \nthis class, so will be our default implementation). Each edge appears in any adjacency list at most \ntwice, so the size of an adjacency list representation implemented using arrays is Θ(|V | + |E|). \nA drawback of this representation is that determining whether your graph contains a given edge"
+  },
+  {
+    "query": "What are two common ways to represent edge weights in a graph?",
+    "answer": "Inside graph representation and separate Set data structure.",
+    "expected_chunk_id": "588e2389c64afdc5",
+    "expected_page": 0,
+    "source": "aa57a9785adf925bc85c1920f53755a0_MIT6_006S20_lec11.pdf",
+    "source_excerpt": "• Many applications for edge weights in a graph: \n– distances in road network \n– latency in network connections \n– strength of a relationship in a social network \n• Two common ways to represent weights computationally: \n– Inside graph representation: store edge weight with each vertex in adjacency lists \n– Store separate Set data structure mapping each edge to its weight \n• We assume a representation that allows querying the weight of an edge in O(1) time \nExamples \nG1 G2 \na \ne \nb \nf \nc \ng \nd \nh \n6 \n8 \n−2 \n5 \n9 \n−5 \n7 \n3 2 \n−1 \n−4 1 4 \na \ne \nb \nf \nc \ng \nd \nh \n6 \n8 \n−2 \n5 \n9 \n−5 \n7 \n3 2 \n−1 \n−4 1 4"
+  },
+  {
+    "query": "What is the method to return the stored item with the smallest key in a set?",
+    "answer": "find min()",
+    "expected_chunk_id": "d072ff5bd0343518",
+    "expected_page": 0,
+    "source": "6d1ae5278d02bbecb5c4428928b24194_MIT6_006S20_lec3.pdf",
+    "source_excerpt": "Introduction to Algorithms: 6.006 \nMassachusetts Institute of Technology \nInstructors: Erik Demaine, Jason Ku, and Justin Solomon Lecture 3: Sorting \nLecture 3: Sorting \nSet Interface (L03-L08) \nContainer build(X) \nlen() \ngiven an iterable X, build set from items in X \nreturn the number of stored items \nStatic find(k) return the stored item with key k \nDynamic insert(x) \ndelete(k) \nadd x to set (replace item with key x.key if one already exists) \nremove and return the stored item with key k \nOrder iter ord() \nfind min() \nfind max() \nfind next(k) \nfind prev(k) \nreturn the stored items one-by-one in key order \nreturn the stored item with smallest key \nreturn the stored item with largest key \nreturn the stored item with smallest key larger than \nk \nreturn the stored item with largest key smaller than k \n• Storing items in an array in arbitrary order can implement a (not so efﬁcient) set \n• Stored items sorted increasing by key allows:"
+  },
+  {
+    "query": "What does the extract_min function return?",
+    "answer": "The label of the item with the minimum key.",
+    "expected_chunk_id": "1e89788eabdddedf",
+    "expected_page": 3,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "if self.A[p].key > self.A[c].key: \nself.A[c], self.A[p] = self.A[p], self.A[c] \nself.label2idx[self.A[c].label] = c \nself.label2idx[self.A[p].label] = p \nself.min_heapify_down(c) \ndef insert(self, label, key): # insert labeled key \nself.A.append(Item(label, key)) \nidx = len(self.A) - 1 \nself.label2idx[self.A[idx].label] = idx \nself.min_heapify_up(idx) \ndef extract_min(self): # remove a label with minimum key \nself.A[0], self.A[-1] = self.A[-1], self.A[0] \nself.label2idx[self.A[0].label] = 0 \ndel self.label2idx[self.A[-1].label] \nmin_label = self.A.pop().label \nself.min_heapify_down(0) \nreturn min_label \ndef decrease_key(self, label, key): # decrease key of a given label \nif label in self.label2idx: \nidx = self.label2idx[label] \nif key < self.A[idx].key: \nself.A[idx].key = key \nself.min_heapify_up(idx)"
+  },
+  {
+    "query": "What is a weighted path in a weighted graph?",
+    "answer": "A weighted path is a path where the weight is the sum of the weights from edges in the path.",
+    "expected_chunk_id": "1ccdf155a15d0ee7",
+    "expected_page": 0,
+    "source": "77ff36ad54779575d9ba8d8687f91b5b_MIT6_006S20_r11.pdf",
+    "source_excerpt": "Exercise: Represent graphs W1 and W2 as adjacency matrices. How could you store weights in an \nadjacency list representation? \nWeighted Shortest Paths \nA weighted path is simply a path in a weighted graph as deﬁned in Recitation 11, where the weight \nof the path is the sum of the weights from edges in the path. Again, we will often abuse our nota-Pk−1tion: if π = (v1, . . . , vk) is a weighted path, we let w(π) denote the path’s weight i=1 w(vi, vi+1). \nThe (single source) weighted shortest paths problem asks for a lowest weight path to every vertex \nv in a graph from an input source vertex s, or an indication that no lowest weight path exists from \ns to v. We already know how to solve the weighted shortest paths problem on graphs for which \nall edge weights are positive and are equal to each other: simply run breadth-ﬁrst search from s \nto minimize the number of edges traversed, thus minimizing path weight. But when edges have"
+  },
+  {
+    "query": "What is the definition of Connected Components in an undirected graph?",
+    "answer": "A partition of V into subsets where each subset is connected and there are no edges between vertices from different subsets.",
+    "expected_chunk_id": "f1067e1ddd7cc9bf",
+    "expected_page": 2,
+    "source": "f3e349e0eb3288592289d2c81e0c4f4d_MIT6_006S20_lec10.pdf",
+    "source_excerpt": "• Connectivity is more complicated for directed graphs (we won’t discuss in this class) \n• Connectivity(G): is undirected graph G connected? \n• Connected Components(G): given undirected graph G = (V, E), return partition of V \ninto subsets Vi ⊆ V (connected components) where each Vi is connected in G and there are \nno edges between vertices from different connected components \n• Consider a graph algorithm A that solves Single Source Reachability \n• Claim: A can be used to solve Connected Components \n• Proof: Run Full-A. For each run of A, put visited vertices in a connected component"
+  },
+  {
+    "query": "What is the total running time of Dijkstra's Algorithm?",
+    "answer": "O(B|V| + |V|·M|V| + |E|·D|V|)",
+    "expected_chunk_id": "26a0a90252ef07ca",
+    "expected_page": 3,
+    "source": "d819e7f4568aced8d5b59e03db6c7b67_MIT6_006S20_lec13.pdf",
+    "source_excerpt": "4 Lecture 13: Dijkstra’s Algorithm \nRunning Time \n• Count operations on changeable priority queue Q, assuming it contains n items: \nOperation Time Occurrences in Dijkstra \nQ.build(X) (n = |X|) \nQ.delete min() \nQ.decrease key(id, k) \nBn \nMn \nDn \n1 \n|V |\n|E| \n• Total running time is O(B|V | + |V |· M|V | + |E|· D|V |) \n• Assume pruned graph to search only vertices reachable from the source, so |V | = O(|E|) \nPriority Queue Q0 Q Operations O(·) Dijkstra O(·) \nn = |V | = O(|E|)on n items build(X) delete min() decrease key(id, k) \nArray n n 1 |V |2 \nBinary Heap n log n(a) log n |E| log |V |\nFibonacci Heap n log n(a) 1(a) |E| + |V | log |V | \n• If graph is dense, i.e., |E| = Θ(|V |2), using an Array for Q0 yields O(|V |2) time \n• If graph is sparse, i.e., |E| = Θ(|V |), using a Binary Heap for Q0 yields O(|V | log |V |) time \n• A Fibonacci Heap is theoretically good in all cases, but is not used much in practice"
+  },
+  {
+    "query": "How can weights be stored in an adjacency list representation?",
+    "answer": "Weights can be stored as values in an edge object within the adjacency list.",
+    "expected_chunk_id": "e9f1e214f6f120ec",
+    "expected_page": 0,
+    "source": "77ff36ad54779575d9ba8d8687f91b5b_MIT6_006S20_r11.pdf",
+    "source_excerpt": "weight as a value in an adjacency matrix, or inside an edge object stored in an adjacency list or \nset. For example, below are randomly weighted adjacency set representations of the graphs from \nRecitation 11. A function to extract such weights might be: \ndef w(u,v): return W[u][v]. \n1 W1 = [0: {1: -2}, W2 = {0: {1: 1, 3: 2, 4: -1}, # 0 \n2 1: {2: 0}, 1: {0: 1}, # 1 \n3 2: {0: 1}, 2: {3: 0}, # 2 \n4 3: {4: 3}} 3: {0: 2, 2: 0}, # 3 \n5 4: {0: -1}} # 4 \nNow that you have an idea of how weights could be stored, for the remainder of this class you \nmay simply assume that a weight function w can be stored using O(|E|) space, and can return the \nweight of an edge in constant time\n1. When referencing the weight of an edge e = (u, v), we will \noften use the notation w(u, v) interchangeably with w(e) to refer to the weight of an edge. \nExercise: Represent graphs W1 and W2 as adjacency matrices. How could you store weights in an \nadjacency list representation? \nWeighted Shortest Paths"
+  },
+  {
+    "query": "What is the space complexity for storing a graph?",
+    "answer": "Θ(|V| + |E|)",
+    "expected_chunk_id": "fe5a4197d498f78d",
+    "expected_page": 1,
+    "source": "196a95604877d326c6586e60477b59d4_MIT6_006S20_lec9.pdf",
+    "source_excerpt": "• Common to use direct access array or hash table for Adj, since want lookup fast by vertex \n• Common to use array or linked list for each Adj(u) since usually only iteration is needed1 \n• For the common representations, Adj has size Θ(|V |), while each Adj(u) has size Θ(deg(u)) \nP • Since u∈V deg(u) ≤ 2|E| by handshaking lemma, graph storable in Θ(|V | + |E|) space \n• Thus, for algorithms on graphs, linear time will mean Θ(|V | + |E|) (linear in size of graph) \nExamples \n• Examples 1 and 2 assume vertices are labeled {0, 1, . . . , |V |− 1}, so can use a direct access \narray for Adj, and store Adj(u) in an array. Example 3 uses a hash table for Adj. \nEx 1 (Undirected) | Ex 2 (Directed) | Ex 3 (Undirected) \nG1 = [ | G2 = [ | G3 = { \n[2, 1], # 0 | [2], # 0 | a: [s, b], b: [a], \n[2, 0, 3], # 1 | [2, 0], # 1 | s: [a, c], c: [s, d, e], \n[1, 3, 0], # 2 | [1], # 2 | d: [c, e, f], e: [c, d, f], \n[1, 2], # 3 | ] | f: [d, e], g: [], \n] | | }"
+  },
+  {
+    "query": "What is the running time for Dijkstra's algorithm using a dictionary implementation?",
+    "answer": "O(|V|² + |E|)",
+    "expected_chunk_id": "05c6dd377437b58f",
+    "expected_page": 1,
+    "source": "ec187276db0faaa047d655979a44de7f_MIT6_006S20_r13.pdf",
+    "source_excerpt": "times for inserting a key-value pair, extracting a value with minimum key, and decreasing the key \nof a value, the running time of Dijkstra will be: \nT\nDijkstra = O(|V |· Ti + |V |· Te + |E|· Td). \nThere are many different ways to implement a priority queue, achieving different running times \nfor each operation. Probably the simplest implementation is to store all the vertices and their \ncurrent shortest path estimate in a dictionary. A hash table of size O(|V |) can support expected \nconstant time O(1) insertion and decrease-key operations, though to ﬁnd and extract the vertex \nwith minimum key takes linear time O(|V |). If the vertices are indices into the vertex set with \na linear range, then we can alternatively use a direct access array, leading to worst case O(1) \ntime insertion and decrease-key, while remaining linear O(|V |) to ﬁnd and extract the vertex with \nminimum key. In either case, the running time for Dijkstra simpliﬁes to: \nT\nDict = O(|V |2 + |E|)."
+  },
+  {
+    "query": "What is the time complexity to solve SSSP in a Directed Acyclic Graph?",
+    "answer": "O(|V| log |V| + |E|)",
+    "expected_chunk_id": "ad9121da87ada0db",
+    "expected_page": 1,
+    "source": "aa57a9785adf925bc85c1920f53755a0_MIT6_006S20_lec11.pdf",
+    "source_excerpt": "– graph has positive weights, and sum of all weights at most O(|V | + |E|) \n• For general weighted graphs, we don’t know how to solve SSSP in O(|V | + |E|) time \n• But if your graph is a Directed Acyclic Graph you can! \n|V | log |V | + |E|"
+  }
+]

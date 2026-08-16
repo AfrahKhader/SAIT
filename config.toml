@@ -1,0 +1,14 @@
+# Save this as .streamlit/config.toml in your project root.
+# It sets the base theme so Streamlit's own widgets match the CSS in app.py
+# (without it, the default red primary colour fights the marker blue).
+
+[theme]
+base = "light"
+primaryColor = "#1E6BB8"
+backgroundColor = "#F6F6F3"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#14181F"
+font = "sans serif"
+
+[client]
+toolbarMode = "minimal"

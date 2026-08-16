@@ -1,0 +1,395 @@
+{
+  "course": "MIT 6.006",
+  "note": "Atomic misconceptions split from staff `common_mistakes` in the 6.006 quiz solutions. origin='staff' is ground truth; anything added later for the problem-set questions must be marked origin='generated'.",
+  "misconceptions": [
+    {
+      "misconception_id": "Q4-b.M1",
+      "question_id": "Q4-b",
+      "topic": "Balanced BSTs / AVL Trees",
+      "label": "heap-order vs traversal-order indexing",
+      "description": "Indexes nodes by heap order rather than traversal order.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q4-b.M2",
+      "question_id": "Q4-b",
+      "topic": "Balanced BSTs / AVL Trees",
+      "label": "one-indexing instead of zero-indexing",
+      "description": "Uses one-indexed positions where the problem uses zero-indexing.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q4-b.M3",
+      "question_id": "Q4-b",
+      "topic": "Balanced BSTs / AVL Trees",
+      "label": "reports full traversal instead of leaves",
+      "description": "Lists every node in the traversal rather than only the leaves.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q4-b.M4",
+      "question_id": "Q4-b",
+      "topic": "Balanced BSTs / AVL Trees",
+      "label": "delete without AVL rebalance",
+      "description": "Deletes the item but does not rebalance to restore the AVL property.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q3-b.M1",
+      "question_id": "Q3-b",
+      "topic": "Binary Heaps & Priority Queues",
+      "label": "third-smallest must be a near-root node",
+      "description": "Assumes the third-smallest item must be one of a specific pair of nodes (B or C) rather than any node consistent with the ordering.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q3-c.M1",
+      "question_id": "Q3-c",
+      "topic": "Binary Heaps & Priority Queues",
+      "label": "maximum must be on the bottom level",
+      "description": "Believes the largest integer must sit at the bottom level, rather than at any leaf.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q4-a.M1",
+      "question_id": "Q4-a",
+      "topic": "Binary Heaps & Priority Queues",
+      "label": "heap-order vs traversal-order when building",
+      "description": "Builds the heap by confusing heap order with traversal order.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q4-a.M2",
+      "question_id": "Q4-a",
+      "topic": "Binary Heaps & Priority Queues",
+      "label": "incorrect extremal delete",
+      "description": "Deletes the extremal item without swapping the root with the last leaf and heapifying down.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q5-a.M1",
+      "question_id": "Q5-a",
+      "topic": "Linear-Time Sorting (counting / radix / bucket)",
+      "label": "non-linear sort where O(n) required",
+      "description": "Uses a sorting algorithm that is not O(n) when a linear-time sort is required.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q5-b.M1",
+      "question_id": "Q5-b",
+      "topic": "Sorting Lower Bounds",
+      "label": "optimality asserted without justification",
+      "description": "Claims O(n log n) is optimal without giving the lower-bound argument.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q5-c.M1",
+      "question_id": "Q5-c",
+      "topic": "Data-Structure Design",
+      "label": "spurious Omega(n log n) lower bound",
+      "description": "Argues an Omega(n log n) comparison lower bound in a setting where it does not apply.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q5-d.M1",
+      "question_id": "Q5-d",
+      "topic": "Linear-Time Sorting (counting / radix / bucket)",
+      "label": "tree depth confused with node count",
+      "description": "Claims there are only ceil(3 log n) + 4 ancestors rather than O(2^(ceil(3 log n)+4)) nodes.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q5-d.M2",
+      "question_id": "Q5-d",
+      "topic": "Linear-Time Sorting (counting / radix / bucket)",
+      "label": "mis-simplifying an exponential bound",
+      "description": "Claims 2^(ceil(3 log n)+4) = O(n) and therefore reaches for counting sort.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q6.M1",
+      "question_id": "Q6",
+      "topic": "Hashing & Hash Tables",
+      "label": "integer sort without a bounded universe",
+      "description": "Uses counting sort, radix sort, or a direct-access array despite no bound on the integer universe.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q6.M2",
+      "question_id": "Q6",
+      "topic": "Hashing & Hash Tables",
+      "label": "amortized bound claimed for hash insertions",
+      "description": "Says n hash-table insertions give an amortized bound where expected/worst-case is what is needed.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q6.M3",
+      "question_id": "Q6",
+      "topic": "Hashing & Hash Tables",
+      "label": "brute-force triple enumeration",
+      "description": "Checks all triples in Omega(n^3) time instead of a subquadratic-per-pair approach.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q7.M1",
+      "question_id": "Q7",
+      "topic": "Tree/BST Augmentation",
+      "label": "query direction inverted",
+      "description": "Finds v from i rather than i from v.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q7.M2",
+      "question_id": "Q7",
+      "topic": "Tree/BST Augmentation",
+      "label": "stops at first left-child link",
+      "description": "Stops early on encountering a left-child link instead of continuing up to the root.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q7.M3",
+      "question_id": "Q7",
+      "topic": "Tree/BST Augmentation",
+      "label": "walks down from the root",
+      "description": "Walks downward from the root while assuming which route leads to v.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q8.M1",
+      "question_id": "Q8",
+      "topic": "Data-Structure Design",
+      "label": "minimum taken within one pipe",
+      "description": "Takes a minimum within an individual pipe instead of over all pipes.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q8.M2",
+      "question_id": "Q8",
+      "topic": "Data-Structure Design",
+      "label": "multi-hole pipes not prioritized",
+      "description": "Does not prioritize pipes with multiple holes over pipes with only one hole.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q8.M3",
+      "question_id": "Q8",
+      "topic": "Data-Structure Design",
+      "label": "structure over all pipes misses bounds",
+      "description": "Stores an AVL tree or heap over all pipes in a way that cannot meet the required bounds.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q8.M4",
+      "question_id": "Q8",
+      "topic": "Data-Structure Design",
+      "label": "augmentation used incorrectly",
+      "description": "Applies tree augmentation in a way that does not actually support the query.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q8.M5",
+      "question_id": "Q8",
+      "topic": "Data-Structure Design",
+      "label": "O(log n) insertion into a sorted array",
+      "description": "Claims O(log n) insertion into a sorted array (search is O(log n); insertion is O(n)).",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q8.M6",
+      "question_id": "Q8",
+      "topic": "Data-Structure Design",
+      "label": "non-polynomial direct-access array",
+      "description": "Initializes a direct-access array whose size is not polynomial in the input.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q8.M7",
+      "question_id": "Q8",
+      "topic": "Data-Structure Design",
+      "label": "Sequence AVL instead of Set AVL",
+      "description": "Uses Sequence AVL trees where Set AVL trees are required.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q9.M1",
+      "question_id": "Q9",
+      "topic": "Tree/BST Augmentation",
+      "label": "maximum range must cross the root",
+      "description": "Assumes the maximum range always passes through the root.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q9.M2",
+      "question_id": "Q9",
+      "topic": "Tree/BST Augmentation",
+      "label": "augmentation without O(1) maintenance",
+      "description": "Claims a substring augmentation without showing it is maintainable in O(1) time.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q9.M3",
+      "question_id": "Q9",
+      "topic": "Tree/BST Augmentation",
+      "label": "separate trees for active/inactive",
+      "description": "Uses separate AVL trees for active and inactive users.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "Q9.M4",
+      "question_id": "Q9",
+      "topic": "Tree/BST Augmentation",
+      "label": "root-spanning substrings ignored",
+      "description": "Fails to consider substrings that contain the root when maintaining the augmentation.",
+      "origin": "staff"
+    },
+    {
+      "misconception_id": "AMORT-1",
+      "question_id": "Q2-a",
+      "topic": "Hashing & Hash Tables",
+      "label": "repeated O(1) op treated as amortized O(m)",
+      "description": "Says that performing an O(1)-time operation m times takes amortized O(m) time, conflating total work with the amortized per-operation bound.",
+      "origin": "staff",
+      "shared": true
+    },
+    {
+      "misconception_id": "AMORT-1",
+      "question_id": "Q2-b",
+      "topic": "Running-Time Analysis (worst-case / expected / amortized)",
+      "label": "repeated O(1) op treated as amortized O(m)",
+      "description": "Says that performing an O(1)-time operation m times takes amortized O(m) time, conflating total work with the amortized per-operation bound.",
+      "origin": "staff",
+      "shared": true
+    }
+  ],
+  "by_question": {
+    "Q4-b": [
+      "Q4-b.M1",
+      "Q4-b.M2",
+      "Q4-b.M3",
+      "Q4-b.M4"
+    ],
+    "Q3-b": [
+      "Q3-b.M1"
+    ],
+    "Q3-c": [
+      "Q3-c.M1"
+    ],
+    "Q4-a": [
+      "Q4-a.M1",
+      "Q4-a.M2"
+    ],
+    "Q5-a": [
+      "Q5-a.M1"
+    ],
+    "Q5-b": [
+      "Q5-b.M1"
+    ],
+    "Q5-c": [
+      "Q5-c.M1"
+    ],
+    "Q5-d": [
+      "Q5-d.M1",
+      "Q5-d.M2"
+    ],
+    "Q6": [
+      "Q6.M1",
+      "Q6.M2",
+      "Q6.M3"
+    ],
+    "Q7": [
+      "Q7.M1",
+      "Q7.M2",
+      "Q7.M3"
+    ],
+    "Q8": [
+      "Q8.M1",
+      "Q8.M2",
+      "Q8.M3",
+      "Q8.M4",
+      "Q8.M5",
+      "Q8.M6",
+      "Q8.M7"
+    ],
+    "Q9": [
+      "Q9.M1",
+      "Q9.M2",
+      "Q9.M3",
+      "Q9.M4"
+    ],
+    "Q2-a": [
+      "AMORT-1"
+    ],
+    "Q2-b": [
+      "AMORT-1"
+    ]
+  },
+  "questions_with_catalog": [
+    "Q2-a",
+    "Q2-b",
+    "Q3-b",
+    "Q3-c",
+    "Q4-a",
+    "Q4-b",
+    "Q5-a",
+    "Q5-b",
+    "Q5-c",
+    "Q5-d",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9"
+  ],
+  "questions_without_catalog": [
+    "PS1-1a",
+    "PS1-1b",
+    "PS1-1d",
+    "PS1-2a",
+    "PS1-2b",
+    "PS1-3",
+    "PS1-4a",
+    "PS1-4b",
+    "PS4-1a",
+    "PS4-1b",
+    "PS4-1c",
+    "PS4-2a",
+    "PS4-2b",
+    "PS4-2c",
+    "PS4-2d",
+    "PS4-3a",
+    "PS4-3b",
+    "PS4-4",
+    "PS4-5",
+    "PS4-6a",
+    "PS4-6b",
+    "PS4-6c",
+    "PS4-6ci",
+    "PS5-1a",
+    "PS5-1b",
+    "PS5-1c",
+    "PS5-1d",
+    "PS5-2",
+    "PS5-3",
+    "PS5-4",
+    "PS5-5",
+    "PS5-6a",
+    "PS5-6b",
+    "PS5-6c",
+    "PS5-6d",
+    "PS6-1a",
+    "PS6-1b",
+    "PS6-2",
+    "PS6-3",
+    "PS6-4",
+    "PS6-5",
+    "PS6-6",
+    "PS7-1a",
+    "PS7-1b",
+    "PS7-2",
+    "PS7-3",
+    "PS7-4",
+    "PS7-5a",
+    "PS7-5b",
+    "PS7-5c",
+    "Q3-a"
+  ]
+}

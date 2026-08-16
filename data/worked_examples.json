@@ -1,0 +1,112 @@
+[
+  {
+    "problem_id": "q1_p1",
+    "question": "(a) [1 point] Write your name and email address on the cover page.",
+    "solution": "Solution: OK! (b) [1 point] Write your name at the top of each page. Solution: OK!",
+    "common_mistakes": [],
+    "topic": "Information",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p2",
+    "question": "The following two Python functions correctly solve the problem: given an array X of n positive integers, where the maximum integer in X is k, return the integer that appears the most times in X. Assume: a Python list is implemented using a dynamic array; a Python dict is implemented using a hash table which randomly chooses hash functions from a universal hash family; and max(X) returns the maximum integer in array X in worst-case O(|X|) time. For each function, state its worst-case and expected running times in terms of n and k. (a) [4 points] (b) [4 points] def frequentest_a(X): def frequentest_b(X): k = max(X) k = max(X) H = {} A = [] for x in X: for i in range(k + 1): H[x] = 0 A.append(0) best = X[0] best = X[0] for x in X: for x in X: H[x] += 1 A[x] += 1 if H[x] > H[best]: if A[x] > A[best]: best = x best = x return best return best i. Worst-case: i. Worst-case:",
+    "solution": "Solution: O(n2) Solution: O(n + k) ii. Expected: ii. Expected: Solution: O(n) Solution: O(n + k)",
+    "common_mistakes": [
+      "Saying doing a O(1)-time operation m times takes amortized O(m) time."
+    ],
+    "topic": "Frequentest",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p3",
+    "question": "Array [A,B,C,D,E,F,G,H,I,J] represents a binary min-heap containing 10 items, where the key of each item is a distinct integer. State which item(s) in the array could have the key with: (a) the smallest integer",
+    "solution": "Solution: A (b) the third smallest integer Solution: B, C, D, E, F, G",
+    "common_mistakes": [
+      "Incorrectly assuming third smallest must be in either B or C.",
+      "Thinking the largest integer must be in the bottom level (instead of in any leaf)"
+    ],
+    "topic": "Haphazard Heap",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p4",
+    "question": "The tree below contains 8 items, where each stored item is an integer which is its own key. 93 85 38 23 63 11 13 17 (a) [6 points] Suppose the tree drawn above is the implicit tree of a binary max-heap H. State the array representation of H, first before and then after performing the opera- tion H.delete max().",
+    "solution": "Solution: Before: [93, 85, 38, 23, 63, 11, 13, 17] After: [85, 63, 38, 23, 17, 11, 13]",
+    "common_mistakes": [
+      "Not building heap correctly (e.g., confusing heap order with traversal order)",
+      "Not correctly deleting min (by swapping root with last leaf and heapifying down)",
+      "Indexing by heap order instead of traversal order (or using 1-indexing)",
+      "Listing full traversal order (rather than just the leaves)",
+      "Deleting the item but not rebalancing the tree to satisfy the AVL Property"
+    ],
+    "topic": "Transforming Trees",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p5",
+    "question": "At Wog Hearts School of Wizcraft and Witcherdry, n incoming students are sorted into four houses by an ancient magical artifact called the Sorting Sock. The Sorting Sock first sorts the n students by each of the four houses’ attributes and then uses the results to make its determinations. For each of the following parts, state and justify what type of sort would be most efficient. (By “efficient”, we mean that faster correct algorithms will receive more points than slower ones.) (a) [5 points] For House Puffle Huff, students must be sorted by friend number, i.e., how many of the other n − 1 incoming students they are friends with, which can be determined in O(1) time.",
+    "solution": "Solution: Friend numbers are non-negative integers less than n, so we can use count- ing sort to sort the students in worst-case O(n) time. (Radix sort also works with the same running time.) Since we have to compute friend number for each student, any algorithm will take at least Ω(n) time, so this is optimal.",
+    "common_mistakes": [
+      "Using a sort that is not O(n)",
+      "Insufficient justification for why O(n log n) is optimal",
+      "Arguing a Ω(n log n) lower bound",
+      "Claiming 3dlog ne +4 ancestors instead of O(23dlog ne+4)",
+      "Saying that 23dlog ne+4 = O(n) and using counting sort"
+    ],
+    "topic": "Sorting Sock",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p6",
+    "question": "Given three arrays A, B, C, each containing n integers, give an O(n2)-time algorithm to find whether some a ∈ A, some b ∈ B, and some c ∈ C have zero sum, i.e., a + b + c = 0. State whether your running time is worst-case, expected, and/or amortized.",
+    "solution": "Solution: We present both expected and worst-case solutions (both were accepted for full points). Expected Time For each pair of numbers (a, b) ∈ A × B, store a + b in a hash table H. Then return Yes if −c appears in H for any c ∈ C, and return No otherwise. Correctness: If any −c appears in H for any c ∈ C, then −c = a0 + b0 for some (a0,b0) ∈ A × B so a0 + b0 + c = 0. Otherwise, there is no c ∈ C for which −c = a0 + b0 for any (a0,b0) ∈ A × B. Running Time: There are O(n2) pairs in A × B, so inserting them into H takes expected O(n2) time. Then checking whether each −c appears in H takes expected O(1) time each, and expected O(n) in total. So this algorithm runs in expected O(n2) time. Continued on scratch paper S1 for worst-case solution... ...) Worst-case Solution Sort A and B increasing using merge sort. We give a two-finger algorithm to determine whether any a ∈ A and b ∈ B sum to a given −c. Doing this for each c ∈ C directly determines whether a, b, c sum to 0. Start with an index i = 0 into A and an index j = n − 1 into B and repeat the following procedure until either i = n or j = −1: • If A[i]+ B[j] > −c, increase i. • If A[i]+ B[j] < −c, decrease j. • Otherwise, A[i]+ B[j] = −c, so return Yes. If this procedure terminates without returning Yes, return No. Correctness: We first prove the claim that the loop maintains the invariant that at the start of a loop, that no A[i0]+ B[j0] = −c for any 0 ≤ i0 < i or any n − 1 ≥ j0 > j. Proof by induction on k = i − j. This invariant is trivially true at the start when k = i − j = −n +1. Assume the claim is true for all k < k∗ = i∗ − j∗ . If we are at the start of a loop with i = i∗ and j = j∗ , we cannot have yet returned, so at the start of the previous loop, there are two cases: • Case 1, (i, j) = (i∗ − 1,j): i∗ − 1 − j = k∗ − 1 < k∗, so by induction, no A[i0]+ B[j0] = −c for any i0 < i∗ − 1 or j0 > j∗ . But we increased i when A[i∗ − 1] + B[j∗] > −c, so since B[j∗] ≥ B[j0] for all j0 > j∗ , then A[i∗ − 1] + B[j0] > −c for all j0 > j∗ , restoring the invariant. • Case 2, (i, j) = (i∗,j +1): i∗ − (j +1) = k∗ −1 < k∗, so by induction, no A[i0]+B[j0] = −c for any i0 < i∗ or j0 > j∗ +1. But we decreased j when A[i∗]+ B[j∗ + 1] < −c, so since A[i∗] ≤ A[i0] for all i0 < i∗, then A[i0]+ B[j0 + 1] < −c for all i0 < i∗, restoring the invariant. So the claim is true. Then if the algorithm terminates without returning Yes, either i = n or j = −1, so the claim implies that no integer from either A or B respectively can be in a triple with c that sums to zero. Running Time: Sorting A and B takes worst-case O(n log n) time. We perform the two-finger algorithm n times. A single two-finger algorithm takes worst-case O(n): every loop does O(1) work and either increases i or decreases j, so since the loop terminates when either i = n or j = −1, the loop executes at most 2n = O(n) times. So the algorithm runs in worst-case O(n2) time in total. SCRATCH PAPER 2. DO NOT REMOVE FROM THE EXAM. You can use this paper to write a longer solution if you run out of space, but be sure to write “Continued on S2” on the problem statement’s page.",
+    "common_mistakes": [
+      "Using counting/radix sort or creating a direct access array (no bound on u so not efficient)",
+      "Saying n insertions into a hash table gives an amortized bound",
+      "Checking all triples in Ω(n3) time"
+    ],
+    "topic": "Triple Sum",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p7",
+    "question": "Given a Sequence AVL Tree T containing n nodes, and a pointer to a node v from T , describe an O(log n)-time algorithm to return the (zero-indexed) index i of node v in the traversal order of T . (Recall that every node u in a Sequence AVL Tree T stores an item u.item, parent u.parent, left child u.left, right child u.right, subtree height u.height, and subtree size u.size.)",
+    "solution": "Solution: Our algorithm will be to walk up the tree from v to the root r of the Sequence AVL Tree, counting the nodes preceding v in the traversal order along the way, since the number of nodes preceding v in the tree is equivalent to v’s (zero-indexed) index. Let # (u) be the number of vertices preceding v in a vertex u’s subtree, where v is in the subtree v of u. Then # (v) = v.left.size if v has a left child and zero otherwise; and can be computed v in O(1) time. Then, for every ancestor of u starting from v, we compute # (u.parent) from v # (u). There are two cases: v • Case 1, u is the left child of u.parent: then all the nodes preceding v in the subtree of u.parent are in the subtree of u, so set # (u.parent) = # (u). v v • Case 2, u is the right child of u.parent: then all nodes in the left subtree of u.parent precede v (as does u), so set # (u.parent) = 1+ u.parent.left.size +# (u). v v Then return # (r), since this is the number of nodes preceding v in r’s subtree (i.e., the entire v tree). Correctness is argued within the algorithm description. This algorithm spends worst-case O(1) work for each ancestor of v, so since the Sequence AVL Tree is balanced, the number of ancestors is bounded by O(log n), and the algorithm runs in worst-case O(log n) time.",
+    "common_mistakes": [
+      "Finding v given i instead of finding i given v",
+      "Breaking early (e.g., as soon as node is a left child, instead of continuing up tree)",
+      "Walking down the tree from root (assuming the way to go to find v)"
+    ],
+    "topic": "Where Am i?",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p8",
+    "question": "FearBird is a supervillian who has been making small holes in the methane gas pipe network of mahtoG City. The network consists of n pipes, each labeled with a distinct positive integer. A hole i is designated by a pair of positive integers (p ,d ), where p denotes the label of the pipe i i i containing the hole, and d is a positive integer representing the distance of the hole from the front i of pipe p . Assume any two holes in the same pipe p will be at different distances from the front i i of p . When a new hole (p ,d ) is spotted, the city receives a report of the hole to keep track of. i i i The city will periodically patch holes using the following priority scheme: • if each pipe contains at most one hole, patch any hole (if one exists); • otherwise, among pairs of holes (p ,d ) and (p ,d ) appearing on the same pipe, i.e., p = p , i i j j i j identify any pair with smallest distance |d − d | between them, and patch one of them. i j Describe a database supporting the following operations, where k is the number of recorded but unpatched holes in the network at the time of the operation. State whether your running times are worst-case, expected, and/or amortized. initialize(H) Initialize the database with n holes H = {(p , d ), . . . , (p , d )}, 0 0 n−1 n−1 with one hole on each pipe, in O(n) time report(p ,d ) Record existence of a hole in pipe p at distance d in O(log k) time i i i i patch() Patch any hole that follows the priority scheme above in O(log k) time",
+    "solution": "Solution: To implement the database, maintain the following data structures: • A Set AVL tree T for each pipe p containing all the unpatched holes in p keyed by hole p distance • A Hash Table D mapping each pipe p to its tree T p • A Binary Min Heap Q containing each consecutive pair of holes (p, d ,d ) appearing on the 1 2 same pipe p with key being the distance |d − d | between them, and any lonely holes (p, d) 2 1 (holes that are alone on their pipes) with key ∞ (when multiple stored items have the same key, we store them in a Hash Table keyed by (p, d ,d ) or (p, d)) 1 2 • A Hash Table C mapping each consecutive hole pair (p, d ,d ) or lonely hole (p, d), to their 1 2 location in Q. Some parenthetical notes on this solution: • A Set AVL Tree can be used for C or Q to achieve identical bounds. • A solution without augmentation was intended, so our solution does not use it. But it is also possible to use augmentation: – e.g., to combine C and Q into a single Set AVL Tree keyed the same as C but storing a pointer to the min distance in subtree; or, – e.g., on each T to maintain the min distance within the pipe (to compute this augmen- p tation efficiently, one would either need to maintain the distance to each hole’s succes- sor/predecessor (not a subtree property), or augment by min/max distance in subtree to be correct) Operation descriptions: Continued on scratch paper S2... ...) To implement initialize(H), initialize empty D and C, and then for each (p, d) ∈ H, construct an empty Set AVL Tree T , insert d into T , insert p into D mapping to T . Then build a hash table p p p D on every (p, d) ∈ H, store it in Q with key ∞, and then insert each (p, d) into C mapping to ∞ D . Building D takes expected O(n) time, and for each (p, d), this procedure takes O(1) time ∞ ∞ (expected in the case of inserting into D). So it takes expected O(n) time in total, and maintains the invariants of the database directly. (Note that we could not use a Set AVL Tree for D, as it could take Ω(n log n) time to construct.) To implement report(p, d), lookup p in D to find T , and then insert d into T . p p • If d has no predecessor or successor in T , then insert (p, d) into Q with key ∞ and insert p (p, d) into C mapping to its location in Q. • Otherwise d has a predecessor or successor in T . p – If d has a predecessor d and successor d , lookup (p, d ,d ) in C to find it in Q, and 1 2 1 2 then remove (p, d ,d ) from both C and Q. 1 2 – Otherwise, it has one of them d0 , so lookup (p, d0) in C to find it in Q and then remove (p, d0) from both C and Q. – In either case, if d has a predecessor d , add (p, d ,d) to Q with key |d − d | and add 1 1 1 (p, d ,d) to C pointing to its location in Q; 1 – and if d has a successor d , add (p, d, d ) to Q with key |d − d| and add (p, d, d ) to C 2 2 2 2 pointing to its location in Q. This procedure does a constant number of worst-case O(log k) time or amortized expected O(1) time operations, so this operation runs in amortized expected O(log k) time, and maintains the invariants of the database by removing any consecutive pairs or lonely holes if they are no longer consecutive or lonely, and adding any new consecutive pairs or lonely holes that may have been introduced. To implement patch(), delete the minimum item from Q containing one or two holes on pipe p, remove it from C, lookup p in D to find T , and remove the relevant holes from T . This p p procedure does a constant number of worst-case O(log k) time or amortized expected O(1) time operations, so this operation runs in amortized expected O(log k) time, and maintains the invariants of the database directly. It is correct because Q exactly implements the requested priority scheme: consecutive pairs with smaller key have higher priority, and will only remove a lonely hole if there are no consecutive pairs having finite key contained in Q.",
+    "common_mistakes": [
+      "Taking a minimum in some pipe rather than a minimum over all pipes",
+      "Not prioritizing pipes having more than one hole over those with only one",
+      "Storing an AVL or heap on all pipes which cannot be maintained within the time bounds",
+      "Attempting an augmentation-based solution incorrectly",
+      "Claiming O(log n)-time insertion into a sorted array",
+      "Initializing a direct access array of non-polynomially bounded size",
+      "Using Sequence AVL Trees instead of Set AVL Trees"
+    ],
+    "topic": "Methane Menace",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  },
+  {
+    "problem_id": "q1_p9",
+    "question": "Vapor is an online gaming platform with n users. Each user has a unique positive integer ID d i and an updatable status, which can be either active or inactive. Every day, Vapor will post online an active range: a pair of positive integers (a, b) with the property that every user having an ID d contained in the range (i.e., with a ≤ d ≤ b) must be active. Vapor wants to post an active i i range containing as many active users as possible, and invite them to play in a special tournament. Describe a database supporting the following worst-case operations: build(D) Initialize the database with user IDs D = {d , . . . , d }, 0 n−1 setting all user statuses initially to active, in O(n log n) time toggle status(d ) Toggle the status of the user with ID d , i i e.g., from active to inactive or vice versa, in O(log n) time big active range() Return an active range (a, b) containing the largest number of active users possible in O(1) time",
+    "solution": "Solution: To implement the database, maintain a single Set AVL Tree T containing each user ID and their status, keyed by ID. In additional, augment each node x in T with four subtree properties: • x.size: the number of IDs in the subtree (as discussed in lecture). • x.suffix = (d, m): the smallest ID d in the subtree for which each of the m IDs d0 ≥ d in the subtree is active, or None. Computable in O(1) time as either the suffix (d ,m ) of the R R right subtree, or if m is equal to the size of the right subtree and x is active, return the suffix R (d ,m ) of the left subtree but add m +1 to m (or (x.key, m + 1) if left suffix is None). L L R L R • x.prefix = (d, m): the largest ID d in the subtree for which each of the m IDs d0 ≤ d in the subtree is active, or None. Computable in O(1) time as either the prefix (d ,m ) of the L L right subtree, or if m is equal to the size of the left subtree and x is active, return the prefix L (d ,m ) of the right subtree but add m +1 to m (or (x.key, m +1) if right prefix is None). R R L R L • x.substring = (a, b, m): a, b are IDs from the subtree where each of the m IDs d in the subtree with a ≤ d ≤ b is active and m is maximized. Computable in O(1) time by tak- ing the max of the substring within either left or right subtree, or the substring spanning the two subtrees if x is active. Specifically, consider the substrings of left and right subtrees, (a ,b ,m ) and (a ,b ,m ) respectively, and then if x is active, consider the suffix of the L L L R R R left subtree (d ,m0 ) and the prefix of the right subtree (d ,m0 ). Then depending on which L L R R of (m ,m0 + 1 + m0 ,m ) is the largest, return (a ,b ,m ), (d ,d ,m0 + 1 + m0 ), or L L R R L L L L R L R (a ,b ,m ) respectively. R R R To implement build(D), build the Set AVL Tree T in worst-case O(n log n) time, maintaining the custom augmentations during each insertion. To implement toggle states(di), remove d from T in worst-case O(log n) time, toggle its i status in O(1) time, and then re-insert d into T in worst-case O(log n) time (again, maintaining i augmentations). To implement big active range(), simply return the substring augmentation at the root in worst-case O(1) time, which is correct by the definition of our augmentation.",
+    "common_mistakes": [
+      "Assuming the max range always goes through the root",
+      "Claiming a substring augmentation without showing how to maintain it in O(1) time",
+      "Using 2 AVL Trees, one of active and one of inactive (doesn’t help to find largest range).",
+      "Substring augmentation maintenance doesn’t consider substrings containing the root"
+    ],
+    "topic": "Vapor Invite",
+    "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf"
+  }
+]

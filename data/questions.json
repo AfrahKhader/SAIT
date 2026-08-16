@@ -1,0 +1,695 @@
+{
+  "course": "MIT 6.006",
+  "topics": [
+    {
+      "topic": "Balanced BSTs / AVL Trees",
+      "questions": [
+        {
+          "question_id": "PS4-1a",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "For the given set binary tree T, which satisfies the BST property but is not height-balanced, identify every node that is not height-balanced and give its skew.",
+          "solution": "The nodes with keys 16 and 37 are not height-balanced. Their skews are 2 and −2, respectively.",
+          "image_description": "The given BST has root 47. Its left child is 16 and right child is 84. Node 16 has children 3 and 37; node 37 has left child 35; node 35 has left child 28. Node 84 has children 64 and 86; node 64 has left child 49; node 86 has right child 88.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-1c",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "For each unbalanced node found in part (a), rotate that node left and right in the original tree when possible. Draw each resulting tree and state whether the entire resulting tree is height-balanced (satisfies the AVL property).",
+          "solution": "For node 16: a left rotation makes 37 the left child of 47, with 16 as 37's left child; 16 has children 3 and 35, and 35 has left child 28. This tree is not height-balanced. A right rotation makes 3 the left child of 47, with 16 as 3's right child; 16 has right child 37, with 37's left subtree rooted at 35 and 35's left child 28. This tree is also not height-balanced. For node 37: a left rotation is impossible because 37 has no right child. A right rotation makes 35 the right child of 16, with children 28 and 37; the resulting full tree is height-balanced.",
+          "image_description": "All rotations are applied to the original BST shown in PS4-1a. The solution shows: left and right rotations at node 16, both leaving an unbalanced tree; no possible left rotation at node 37; and a right rotation at node 37, which makes 35 the parent of 28 and 37 and yields a height-balanced tree.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "Q4-b",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Treat the displayed original tree as a zero-indexed Sequence AVL Tree S, whose leaves in traversal order are (17, 63, 11, 13). Perform `S.delete_at(3)`, including rotations, and list only the leaves in traversal order afterward.",
+          "solution": "The resulting leaves in traversal order are (17, 85, 11, 13).",
+          "image_description": "The original tree is the same displayed binary tree: root 93; children 85 and 38; 85 has children 23 and 63; 38 has children 11 and 13; and 23 has left child 17. The leaf traversal order specified in the question is 17, 63, 11, 13.",
+          "common_mistakes": "Indexing by heap order rather than traversal order, or using one-indexing; listing the full traversal rather than only leaves; deleting the item without rebalancing to restore the AVL property."
+        }
+      ]
+    },
+    {
+      "topic": "Binary Search Trees",
+      "questions": [
+        {
+          "question_id": "PS4-1b",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Starting with the given BST T, perform these operations in order without rotations, using leaf insertion/deletion while maintaining the BST property: insert(2), delete(49), delete(35), insert(85), and delete(84). Draw the tree after each operation. A deleted key may be swapped down into a leaf.",
+          "solution": "After insert(2): 2 becomes the left child of 3. After delete(49): remove 49, which is a leaf. After delete(35): remove 35 and promote its child 28 to be the left child of 37. After insert(85): insert 85 as the left child of 86. For delete(84), two valid results are given: replace 84 by predecessor 64, yielding 64 with right child 86 (whose children are 85 and 88); or replace 84 by successor 85, yielding 85 with children 64 and 86 (and 86 has right child 88). The rest of the tree remains rooted at 47, with left subtree rooted at 16 containing 3 (with left child 2) and 37 (with left child 28).",
+          "image_description": "Initial tree: root 47; left subtree 16 with children 3 and 37, where 37 has left child 35 and 35 has left child 28; right subtree 84 with children 64 and 86, where 64 has left child 49 and 86 has right child 88. The solution illustrates the tree after each of the five operations and shows two valid final trees for deleting 84.",
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Binary Heaps & Priority Queues",
+      "questions": [
+        {
+          "question_id": "PS4-2a",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Draw the array [4, 12, 8, 21, 14, 9, 17] as a complete binary tree and determine whether it is a max-heap, min-heap, or neither. If neither, transform it into a min-heap using adjacent tree swaps.",
+          "solution": "It is a min-heap, so no swaps are needed.",
+          "image_description": "The complete binary tree is represented level-order by the array: root 4; children 12 and 8; 12 has children 21 and 14; 8 has children 9 and 17.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-2b",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Draw the array [701, 253, 24, 229, 17, 22] as a complete binary tree and determine whether it is a max-heap, min-heap, or neither. If neither, transform it into a min-heap using adjacent tree swaps.",
+          "solution": "It is a max-heap, so no swaps are needed.",
+          "image_description": "The complete binary tree is represented level-order by the array: root 701; children 253 and 24; 253 has children 229 and 17; 24 has left child 22.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-2c",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Draw the array [2, 9, 13, 8, 0, 2] as a complete binary tree and determine whether it is a max-heap, min-heap, or neither. If neither, transform it into a min-heap by repeatedly swapping adjacent tree items, showing the swaps.",
+          "solution": "It is neither. Three swaps produce a min-heap: swap 9 with 0, producing [2, 0, 13, 8, 9, 2]; swap the root 2 with 0, producing [0, 2, 13, 8, 9, 2]; then swap 13 with its child 2, producing [0, 2, 2, 8, 9, 13], a min-heap.",
+          "image_description": "The initial complete binary tree has root 2; children 9 and 13; node 9 has children 8 and 0; node 13 has left child 2. The solution depicts three successive parent-child swaps: 9↔0, then root 2↔0, then 13↔2.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-2d",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Draw the array [1, 3, 6, 5, 4, 9, 7] as a complete binary tree and determine whether it is a max-heap, min-heap, or neither. If neither, transform it into a min-heap using adjacent tree swaps.",
+          "solution": "It is a min-heap, so no swaps are needed.",
+          "image_description": "The complete binary tree is represented level-order by the array: root 1; children 3 and 6; 3 has children 5 and 4; 6 has children 9 and 7.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-3a",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Given an unsorted array A of garden pairs (si, ri), where si is a positive score and ri is a unique registration number, and an integer k ≤ |A|, describe an O(|A| + k log |A|)-time algorithm that returns registration numbers for k gardens with highest scores, breaking ties arbitrarily.",
+          "solution": "Build a max-heap from A keyed by score in O(|A|) time. Call delete-max k times, storing and returning the registration number from each extracted pair. Each deletion takes O(log |A|), so the total time is O(|A| + k log |A|). The heap property ensures each extraction returns a current maximum-score garden, so the returned gardens have k highest scores, with arbitrary tie breaking.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-3b",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Given a max-heap A of garden pairs (si, ri) and a reference score x, describe an O(nx)-time algorithm returning registration numbers of all nx gardens whose scores are strictly greater than x.",
+          "solution": "Recursively search from the root. At a node v, if its score is at most x, return nothing because every descendant also has score at most x by the max-heap property. If its score exceeds x, report v's registration number and recursively search its existing children. The reported items form a connected subtree containing the root; the traversal visits at most the nx reported nodes plus at most two children per reported node, or at most 3nx nodes. Thus it runs in O(nx) time.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "Q3-a",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "The array [A, B, C, D, E, F, G, H, I, J] represents a binary min-heap of 10 items with distinct integer keys. Which item could have the smallest key?",
+          "solution": "A.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "Q3-b",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "The array [A, B, C, D, E, F, G, H, I, J] represents a binary min-heap of 10 items with distinct integer keys. Which items could have the third-smallest key?",
+          "solution": "B, C, D, E, F, or G.",
+          "image_description": null,
+          "common_mistakes": "Incorrectly assuming that the third-smallest item must be either B or C."
+        },
+        {
+          "question_id": "Q3-c",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "The array [A, B, C, D, E, F, G, H, I, J] represents a binary min-heap of 10 items with distinct integer keys. Which items could have the largest key?",
+          "solution": "F, G, H, I, or J.",
+          "image_description": null,
+          "common_mistakes": "Thinking the largest integer must be at the bottom level rather than at any leaf."
+        },
+        {
+          "question_id": "Q4-a",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "The displayed tree contains the items 93, 85, 38, 23, 63, 11, 13, and 17. Treat it as the implicit tree of a binary max-heap H. Give H's array representation before and after `H.delete_max()`.",
+          "solution": "Before: [93, 85, 38, 23, 63, 11, 13, 17]. After: [85, 63, 38, 23, 17, 11, 13].",
+          "image_description": "A binary tree with root 93; its children are 85 (left) and 38 (right). Node 85 has children 23 (left) and 63 (right); node 38 has children 11 (left) and 13 (right). Node 23 has left child 17 and no displayed right child.",
+          "common_mistakes": "Not building the heap correctly, such as confusing heap order with traversal order; not correctly deleting the extremal item by swapping the root with the last leaf and heapifying down."
+        }
+      ]
+    },
+    {
+      "topic": "Data-Structure Design",
+      "questions": [
+        {
+          "question_id": "PS4-4",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Design a database for n solar farms, each with unique address si and capacity ci, supporting: initialize(S) in O(n); power_on(bj,dj), connecting a named building to any farm with at least dj available capacity or reporting none, in O(log n); power_off(bj) in O(log n); and customers(si), returning the k names connected to farm si in O(k). State whether bounds are worst-case, expected, and/or amortized.",
+          "solution": "Maintain: (1) a max-priority queue P of farms keyed by available capacity, storing each farm's address, total capacity, and current available capacity; (2) a set B mapping each powered building name to its assigned farm address and demand; and (3) a set F mapping each farm address to its own set Bi of assigned building names and a pointer to its location in P. Initialize by building P and F from S and leaving B and all Bi sets empty. For power_on, delete-max from P; if its available capacity is too small, reinsert it and report failure. Otherwise subtract dj, reinsert the farm, add bj to B, and add bj to that farm's Bi. For power_off, use B to find the farm and demand, remove bj from Bi, remove that farm from P by its stored location, increase its available capacity by dj, and reinsert it. For customers, find Bi in F and iterate through its names. Implement B and F as hash tables, giving expected lookup/update bounds and amortized dynamic-operation bounds; each Bi can be an AVL set or hash table. Implement P as a max-heap with pointers/indices for removal by location, or as a sequence AVL tree augmented with subtree maximum. P builds in O(n) and supports needed updates in O(log n). Thus initialize is O(n); power_on and power_off are expected and amortized O(log n); customers is expected O(k) (including expected lookup).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS1-2a",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "Given a data structure D supporting D.insert_first(x), D.delete_first(), D.insert_last(x), and D.delete_last(), each in O(1) time, implement swap_ends(D), which swaps the first and last items of D in O(1) time.",
+          "solution": "Delete both endpoints and reinsert them in opposite positions:\n```python\ndef swap_ends(D):\n    x_first = D.delete_first()\n    x_last = D.delete_last()\n    D.insert_first(x_last)\n    D.insert_last(x_first)\n```\nEach underlying operation is O(1), so the total time is O(1).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS1-2b",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "Given a data structure D supporting O(1)-time insertion and deletion at both ends, implement shift_left(D, k): move the first k items, in order, to the end of D in O(k) time. Afterward, the original kth item is last and the original (k+1)st item is first.",
+          "solution": "Repeatedly delete the first item and insert it at the last position. A recursive implementation is:\n```python\ndef shift_left(D, k):\n    if (k < 1) or (k > len(D) - 1):\n        return\n    x = D.delete_first()\n    D.insert_last(x)\n    shift_left(D, k - 1)\n```\nEach call performs O(1) work, and there are O(k) calls, for O(k) time. Moving the first item to the back preserves the relative ordering of all items.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS1-3",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "Design a sequence data structure using O(n) space for n items that supports worst-case O(1)-time index lookup and amortized O(1)-time insertion and removal at both the front and back.",
+          "solution": "Use an array with the sequence stored in its middle, maintaining the array index i of the leftmost item and the number n of stored items. When rebuilding storage for n items, allocate an array of length m = 3n and copy the items into its middle, leaving linearly many empty slots at both ends. Front/back insertions and removals then take O(1) unless rebuilding is required. A full end implies Ω(n) insertions since the previous rebuild; if deletion makes n/m < 1/6, then Ω(n) deletions occurred since rebuilding. Thus linear-time rebuilding is amortized O(1) per operation. To access zero-indexed item j, verify it is in range and return the array entry at i + j, which is worst-case O(1).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "Q5-c",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Students must be sorted by bravery. Bravery cannot be measured or quantified, but for any set of students the Sorting Sock can identify a bravest student in O(1) time. State and justify the most efficient sorting method.",
+          "solution": "Repeatedly select a bravest among all currently unselected students, using the Sorting Sock as a priority queue that returns a maximum in O(1) time. This sorts in worst-case O(n) time and is optimal, since every student must be considered. Integer-based sorting cannot be used because bravery is not quantified.",
+          "image_description": null,
+          "common_mistakes": "Arguing an Ω(n log n) lower bound."
+        },
+        {
+          "question_id": "Q8",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Design a database for holes in n uniquely labeled pipes. A recorded hole is (p,d), where p is a pipe label and d is its distance from the pipe front; holes on one pipe have distinct distances. `initialize(H)` receives n holes, one per pipe, and must run in O(n) time. `report(p,d)` records a new hole in O(log k) time, and `patch()` removes a hole in O(log k) time according to this priority: if every pipe has at most one hole, remove any hole; otherwise choose a closest-distance pair of holes on the same pipe and remove one of that pair. Here k is the current number of unpatched holes. State whether bounds are worst-case, expected, and/or amortized.",
+          "solution": "Maintain: (1) a Set AVL tree Tp for every pipe p, keyed by distance; (2) a hash table D mapping pipe labels to their Tp; (3) a binary min-heap Q storing every consecutive pair (p,d1,d2) on a pipe, keyed by |d2−d1|, plus each lonely hole (p,d), keyed by infinity; and (4) a hash table C mapping every stored pair or lonely-hole record to its heap location.\n\nInitialize empty D and C. For each initial (p,d), create Tp containing d and map p to Tp in D. Build a hash table of all lonely-hole records and place it into Q with key infinity, then store their locations in C. This is expected O(n), using hash-table construction/insertion.\n\nFor `report(p,d)`, insert d into Tp, find its predecessor and successor, remove from Q and C any record that is no longer a consecutive pair or lonely hole, and add the newly created consecutive-pair records (or a lonely-hole record if appropriate). Only constantly many AVL-tree, heap, and hash-table operations are needed, for amortized expected O(log k) time.\n\nFor `patch()`, delete Q's minimum record, remove it from C, find Tp through D, and remove the relevant one or two indicated holes from Tp. This takes amortized expected O(log k) time. Q implements the priority rule because finite-key consecutive pairs precede infinity-key lonely holes, and its minimum finite key is the smallest distance among all pipes.",
+          "image_description": null,
+          "common_mistakes": "Taking a minimum within an individual pipe instead of over all pipes; not prioritizing pipes with multiple holes over pipes with only one hole; storing an AVL tree or heap over all pipes in a way that cannot meet the bounds; using augmentation incorrectly; claiming O(log n) insertion into a sorted array; initializing a non-polynomial-size direct-access array; using Sequence AVL Trees instead of Set AVL Trees."
+        }
+      ]
+    },
+    {
+      "topic": "Tree/BST Augmentation",
+      "questions": [
+        {
+          "question_id": "PS4-5",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Given an array M = (M0, ..., Mn−1) of 4×4 joint transformation matrices for a robotic arm, design a database supporting worst-case initialize(M) in O(n), update_joint(k,M) in O(log n), and full_transformation() returning M0·M1·...·Mn−1 in O(1). Matrix multiplication takes O(1) time and is not commutative.",
+          "solution": "Store the matrices in traversal order in a sequence AVL tree (a static balanced binary tree or array-based complete tree also suffices). Augment each node v with v.P, the ordered product of all matrices in v's subtree. If PL and PR are the products stored at the left and right children, using the identity matrix for a missing child, maintain v.P = PL · v.M · PR in O(1). Build the tree and compute augmentations bottom-up in O(n). To update joint k, locate its node with get_at(k), replace its matrix, and recompute augmentations on the path to the root, taking O(log n). Return the root augmentation for full_transformation in O(1).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-6b",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Modify a Set AVL tree of key-value items so it supports max_prefix() in worst-case O(1), returning a key k* and prefix(k*) for a key maximizing prefix(k) = sum of values of items with key at most k, while preserving the running times of all ordinary Set AVL operations.",
+          "solution": "Augment every node v with: v.sum, the sum of values in its subtree; v.max_prefix, the maximum prefix sum attained within its subtree; and v.max_prefix_key, a key attaining that maximum. Set v.sum = left.sum + v.item.val + right.sum, treating missing-child sums as 0. Compute v.max_prefix as the maximum of: left.max_prefix; left.sum + v.item.val; and left.sum + v.item.val + right.max_prefix. Missing-child maximum-prefix candidates are treated as −∞. Set v.max_prefix_key respectively to the left child's stored key, v.item.key, or the right child's stored key according to the maximizing case. These are all locally recomputable in O(1), so AVL updates and rotations preserve their usual bounds. max_prefix() returns the root's stored maximizing key and maximum-prefix value in O(1).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-6c",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Using the data structure from part (b) as a black box, give a worst-case O(n log n)-time algorithm returning (x, y, t), where the slice defined by xi ≤ x and yi ≤ y has maximum total tastiness.",
+          "solution": "Sort toppings by x-coordinate in O(n log n). Start with an empty augmented AVL tree keyed by y-coordinate. Process toppings in increasing x order: insert each (yi, ti) in O(log n), call max_prefix() to obtain (y*, t*), and record (xi, y*, t*) if t* is best so far. After processing all toppings, return the best recorded triple. At step xi, the tree contains exactly the toppings with x-coordinate at most xi, and max_prefix gives the best slice whose x threshold is xi. By part (a), an optimal slice has thresholds at topping coordinates, so maximizing across all steps is correct. Sorting plus n AVL insertions gives O(n log n) worst-case time.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS4-6ci",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Write Python function tastiest_slice(toppings) implementing the O(n log n) algorithm from part (c), including the augmented AVL-tree data structure from part (b).",
+          "solution": "The provided solution defines an AVL node whose subtree_update computes subtree sum, maximum prefix sum, and a maximizing key; a tree wrapper exposing max_prefix; and then sorts toppings by x, inserts each (y,t) item, and keeps the best returned prefix:\n\nclass Part_B_Node(BST_Node):\n    def subtree_update(A):\n        super().subtree_update()\n        A.sum = A.item.val\n        if A.left:\n            A.sum += A.left.sum\n        if A.right:\n            A.sum += A.right.sum\n        left = -float('inf')\n        right = -float('inf')\n        middle = A.item.val\n        if A.left:\n            left = A.left.max_prefix\n            middle += A.left.sum\n        if A.right:\n            right = middle + A.right.max_prefix\n        A.max_prefix = max(left, middle, right)\n        if left == A.max_prefix:\n            A.max_prefix_key = A.left.max_prefix_key\n        elif middle == A.max_prefix:\n            A.max_prefix_key = A.item.key\n        else:\n            A.max_prefix_key = A.right.max_prefix_key\n\nclass Part_B_Tree(Set_AVL_Tree):\n    def __init__(self):\n        super().__init__(Part_B_Node)\n\n    def max_prefix(self):\n        k = self.root.max_prefix_key\n        s = self.root.max_prefix\n        return (k, s)\n\ndef tastiest_slice(toppings):\n    B = Part_B_Tree()\n    X, Y, T = 0, 0, 0\n    toppings.sort(key=lambda topping: topping[0])\n    for (x, y, t) in toppings:\n        B.insert(Key_Val_Item(y, t))\n        (Y_, T_) = B.max_prefix()\n        if T < T_:\n            X, Y, T = x, Y_, T_\n    return (X, Y, T)\n\nThe implementation sorts once and performs one AVL insertion and O(1) max-prefix query per topping, for O(n log n) time.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "Q7",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Given a Sequence AVL Tree T with n nodes and a pointer to node v, describe a worst-case O(log n)-time algorithm to return v's zero-indexed position in T's traversal order. Each node stores parent, left child, right child, subtree height, and subtree size.",
+          "solution": "Walk upward from v to the root, accumulating the number of nodes preceding v. Initialize the count to `v.left.size` if v has a left child, otherwise 0. At each step from node u to its parent: if u is the left child, the count is unchanged; if u is the right child, add `1 + u.parent.left.size`. At the root, return the count. This is correct because it counts exactly all preceding nodes contributed when moving upward through right-child links. An AVL tree has O(log n) ancestors, with O(1) work per ancestor, so the running time is worst-case O(log n).",
+          "image_description": null,
+          "common_mistakes": "Finding v from i rather than i from v; stopping early when encountering a left-child link instead of continuing to the root; walking downward from the root while assuming which route leads to v."
+        },
+        {
+          "question_id": "Q9",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Design a database for n users with unique positive integer IDs and active/inactive statuses. `build(D)` initializes all IDs in D as active in O(n log n) worst-case time; `toggle_status(di)` toggles user di in O(log n) worst-case time; and `big_active_range()` returns an ID range [a,b] containing the maximum possible number of active users in O(1) worst-case time.",
+          "solution": "Maintain one Set AVL tree T keyed by user ID, with each node storing status and augmented with: subtree size; a suffix `(d,m)` describing the longest all-active suffix of the subtree; a prefix `(d,m)` describing the longest all-active prefix; and a substring `(a,b,m)` describing the largest contiguous-by-ID range in the subtree containing only active users.\n\nEach augmentation is maintained in O(1) time from child augmentations. The maximum substring is the maximum of the left subtree's best substring, the right subtree's best substring, and—when the root node is active—the range spanning the left active suffix, the root, and the right active prefix.\n\nBuild T by inserting all IDs while maintaining the augmentations, taking worst-case O(n log n). To toggle an ID, remove its node, change its status, and reinsert it, taking worst-case O(log n). To return the best active range, return the root's `substring` augmentation in worst-case O(1).",
+          "image_description": null,
+          "common_mistakes": "Assuming the maximum range always passes through the root; claiming a substring augmentation without showing O(1)-time maintenance; using separate AVL trees for active and inactive users; failing to consider substrings that contain the root when maintaining the augmentation."
+        }
+      ]
+    },
+    {
+      "topic": "Divide & Conquer",
+      "questions": [
+        {
+          "question_id": "PS4-6a",
+          "source": "AP$.pdf",
+          "source_type": "problem_set",
+          "question": "Toppings i have distinct integer coordinates (xi, yi) and tastiness ti. A slice selected by point (x0, y0) contains toppings satisfying xi ≤ x0 and yi ≤ y0. Show that if a point (x0, y0) produces a slice of nonzero tastiness t, then there exist topping indices i and j such that the aligned point (xi, yj) produces a slice with the same tastiness t.",
+          "solution": "Choose the largest topping x-coordinate xi satisfying xi ≤ x0 and the largest topping y-coordinate yj satisfying yj ≤ y0. Since the slice has nonzero tastiness, it contains at least one topping, so both choices exist. No topping coordinate lies strictly between xi and x0 in the relevant x direction, nor between yj and y0 in the relevant y direction; therefore the slices for (xi, yj) and (x0, y0) contain exactly the same toppings and have equal tastiness t.",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Graph Representations",
+      "questions": [
+        {
+          "question_id": "PS5-1a",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "Draw the undirected graph on vertices {0,1,2,3,4,5} represented by the given 6-by-6 direct-access adjacency-matrix representation Adj, where Adj[u][v] = 1 exactly when u and v are connected.",
+          "solution": "The graph has edges {0,2}, {1,3}, {1,4}, {1,5}, {2,3}, {2,4}, and {4,5}.",
+          "image_description": "The solution figure shows an undirected graph with vertices 0 through 5. Vertex 0 is connected to 2; vertex 1 is connected to 3, 4, and 5; vertex 2 is connected to 3 and 4; and vertex 4 is connected to 5.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS5-1b",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "Write the adjacency-list representation of the directed graph shown, using a Python dictionary mapping each vertex to a Python list of its outgoing neighbors in alphabetical order.",
+          "solution": "Adj = {\n  'A': ['B'],\n  'B': ['C', 'D'],\n  'C': ['E', 'F'],\n  'D': ['E', 'F'],\n  'E': [],\n  'F': ['D', 'E']\n}",
+          "image_description": "The directed graph has vertices A, B, C, D, E, F and directed edges A→B; B→C and B→D; C→E and C→F; D→E and D→F; F→D and F→E. Vertex E has no outgoing edges.",
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Breadth-First Search (BFS)",
+      "questions": [
+        {
+          "question_id": "PS5-1c",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "Starting at A in the directed graph from part (b), run BFS and DFS, visiting each vertex's outgoing neighbors in alphabetical order. For each search, draw the resulting search tree and list vertices in first-visit order.",
+          "solution": "BFS first-visit order: [A, B, C, D, E, F]. The BFS tree edges are A→B, B→C, B→D, C→E, and C→F.\n\nDFS first-visit order: [A, B, C, E, F, D]. The DFS tree edges are A→B, B→C, C→E, C→F, and F→D.",
+          "image_description": "The BFS tree has A as root, with child B; B has children C and D; and C has children E and F. The DFS tree has A as root, then B, then C; C has children E and F; and F has child D.",
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Topological Sort & DAGs",
+      "questions": [
+        {
+          "question_id": "PS5-1d",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "For the directed graph from part (b), identify every single edge whose removal makes the graph a DAG. For each such removal, give a topological ordering of the resulting DAG.",
+          "solution": "The only directed cycle is between D and F. Thus either edge (D,F) or (F,D) may be removed.\n\nRemoving (D,F) gives the unique topological order (A, B, C, F, D, E).\n\nRemoving (F,D) gives two topological orders: (A, B, C, D, F, E) and (A, B, D, C, F, E).",
+          "image_description": "The relevant directed graph has the only cycle D→F→D. Its other edges are A→B, B→C, B→D, C→E, C→F, D→E, and F→E.",
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Connected Components",
+      "questions": [
+        {
+          "question_id": "PS5-2",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "Boston's electrical network has n power plants and n^2 buildings connected by bidirectional wires. Every building is powered, directly or recursively, by exactly one power plant. Given the list W of wires, describe an O(n^4)-time algorithm to choose the power plant at which an emergency generator would back up the greatest number of buildings if that plant failed.",
+          "solution": "Construct an undirected graph whose vertices are all buildings and power plants and whose edges are the wires. Because every building is powered and no building can be powered by more than one plant, each connected component contains exactly one power plant. Therefore, the number of buildings backed up by placing a generator at plant p is the size of p's connected component minus one.\n\nRun Full-BFS or Full-DFS to find and count all connected components, then return the power plant in the largest component. The graph has n+n^2 vertices and |W|=O(n^4) edges, so construction and full graph traversal take O(n^4) time; identifying the plant in a component takes O(n) time. Total time is O(n^4).",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Bipartiteness & Graph Coloring",
+      "questions": [
+        {
+          "question_id": "PS5-3",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "Given n pairs of friends that cannot attend the same party, describe an O(n)-time algorithm to determine whether all friends can be assigned to two parties so that no short-circuiting pair attends the same party.",
+          "solution": "Construct an undirected graph with one vertex for each friend participating in a short-circuiting pair and one edge for each such pair. The requested assignment exists exactly when this graph is bipartite.\n\nRun Full-BFS, recording each vertex's distance from the BFS source in its connected component. Color vertices at even distance with one color and vertices at odd distance with the other. Then check every edge: if an edge has endpoints with the same color, report that two peaceful parties are impossible; otherwise report that they are possible. A same-color edge together with the spanning-forest path between its endpoints yields an odd cycle.\n\nThe graph has n edges and at most 2n vertices. Construction, Full-BFS, and checking all edges each take O(n) time, for total O(n) time.",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Shortest Paths (unweighted / BFS)",
+      "questions": [
+        {
+          "question_id": "PS5-4",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "An n-by-n grid labels every square as river 'euphris', river 'tigrates', or a farmer name. A trade route is a shortest unique path along grid edges from an intersection adjacent to a euphris square to one adjacent to a tigrates square, and it may not use an edge between two squares owned by the same farmer. Describe an O(n^2)-time algorithm to find the route.",
+          "solution": "Build an undirected graph whose vertices are the (n+1)^2 grid intersections. Add edges for grid segments, except omit an interior segment separating two squares owned by the same farmer. Boundary segments remain present; segments adjacent to river squares are also not omitted under the stated condition. Thus graph paths correspond exactly to crop-preserving routes.\n\nMark every intersection adjacent to an euphris square as an euphris vertex and every intersection adjacent to a tigrates square as a tigrates vertex. Add a super-source s with an edge to every euphris vertex. Run BFS once from s, select the closest reachable tigrates vertex, and follow BFS parent pointers backward to s; omit the initial super-source edge to obtain the trade route.\n\nThe augmented graph has (n+1)^2+1 vertices and O(n^2) edges. It can be built in O(n^2), and BFS takes O(n^2), so the total time is O(n^2).",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "State-Space / Implicit Graph Search",
+      "questions": [
+        {
+          "question_id": "PS5-5",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "A labyrinth has locations L, directed or bidirectional doors D, entrance/exit e, pizza locations Π, and four possible key-card types. A card-access door may be traversed only after obtaining its matching card at a known location. Describe an O(|L| + |D|)-time algorithm to find a viable path from e back to e that collects at least one pizza and minimizes the number of doors traversed.",
+          "solution": "Use a state-space graph that records Liza's location, whether she has collected a pizza, and which of the four key cards she has. For every location ℓ, create 2^5=32 state vertices v(ℓ,p,kSeeSail,kTOPS,kS3C,kDPW), where each Boolean records whether she has at least one pizza or the corresponding key card. (The source writes this as 2^5 states per location, despite a typographical reference to 25.)\n\nFor every traversable directed door ℓ1→ℓ2 and every state at ℓ1, add a directed state transition if the door needs no card or its required card is held after collecting items at ℓ1. The transition updates the pizza flag if ℓ1 contains pizza and updates each card flag if ℓ1 is that card's known location. Represent a two-way door by transitions in both directions.\n\nRun BFS from v(e,0,0,0,0,0) to any state v(e,1,kSeeSail,kTOPS,kS3C,kDPW). Return a shortest path found using parent pointers. These paths exactly encode feasible walks that return to e with pizza, and BFS minimizes crossed doors. Since the number of item states is constant, the state graph has O(|L|) vertices and O(|D|) edges, so construction and BFS take O(|L|+|D|) time.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS5-6a",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "For an n-by-n Tilt puzzle board B with b fixed obstacles and s movable sliders, argue that the number of board configurations reachable from B is at most C(n,b,s) = (1/s!) ∏_{i=0}^{s-1}(n^2-b-i).",
+          "solution": "There are n^2-b non-obstacle squares, and a configuration is determined by choosing which s of them contain sliders. Thus the number of possible configurations is\nC(n,b,s) = choose(n^2-b,s) = (n^2-b)! / (s!(n^2-b-s)!) = (1/s!) ∏_{i=0}^{s-1}(n^2-b-i).\nThe number reachable from B is at most this number, since obstacles may prevent reaching some squares and tilting may not be able to create certain gaps between sliders.",
+          "image_description": "The problem context illustrates a 5-by-5 Tilt board. Black squares are fixed obstacles, circles are sliders, and a gray square is the target. The initial board has obstacles at row 1 column 2, row 2 column 2, and row 5 column 3; the target is at row 3 column 3; and sliders begin at row 1 column 1 and row 5 column 1. The illustrated shortest solution has eight moves: down, right, up, right, right, up, left, down.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS5-6b",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "In the Tilt state graph, where B' is a successor of B if one Tilt move transforms B into B', argue that a board configuration can have Ω(n^s) predecessors but has at most r = O(1) successors.",
+          "solution": "A configuration has at most four successors, one for each possible Tilt direction, so r=4=O(1).\n\nFor predecessors, consider a board with no obstacles and s≤n sliders, where B has at most one slider in each column and every slider is at the bottom of its column. Any configuration with those same s columns occupied, but with each slider at any of the n positions in its own column, becomes B after a down move. Hence B has Ω(n^s) predecessors.",
+          "image_description": "The problem context illustrates a 5-by-5 Tilt board. Black squares are fixed obstacles, circles are sliders, and a gray square is the target. The initial board has obstacles at row 1 column 2, row 2 column 2, and row 5 column 3; the target is at row 3 column 3; and sliders begin at row 1 column 1 and row 5 column 1. The illustrated shortest solution has eight moves: down, right, up, right, right, up, left, down.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS5-6c",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "Given a Tilt puzzle (B,t), describe an algorithm that returns a shortest sequence of Tilt moves solving the puzzle, or reports that no solution exists. If a shortest solution has k moves, with k=∞ when unsolvable, the running time must be O(n^2 min{r^k, C(n,b,s)}).",
+          "solution": "Treat each reachable board configuration as a vertex of an implicit directed graph, with an edge for each Tilt move to its resulting successor configuration. Run BFS from the initial board B, generating a configuration's at most r=4 successor boards only when that configuration is processed, using move(B,d) in O(n^2) time. Store parents and moves. When BFS first finds a board B* with a slider at the target, return its parent-pointer path; BFS guarantees this is a shortest move sequence. If BFS exhausts all reachable configurations, return that no solution exists.\n\nAt most O(r^k) configurations are explored before a solution at depth k is first found. If unsolvable, at most C(n,b,s) configurations are explored. Each costs O(n^2) to process, giving O(n^2 min{r^k, C(n,b,s)}).",
+          "image_description": "The problem context illustrates a 5-by-5 Tilt board. Black squares are fixed obstacles, circles are sliders, and a gray square is the target. The initial board has obstacles at row 1 column 2, row 2 column 2, and row 5 column 3; the target is at row 3 column 3; and sliders begin at row 1 column 1 and row 5 column 1. The illustrated shortest solution has eight moves: down, right, up, right, right, up, left, down.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS5-6d",
+          "source": "AP5.pdf",
+          "source_type": "problem_set",
+          "question": "Write a Python function solve_tilt(B, t) implementing the shortest-path Tilt-solving algorithm. It should return a list of moves solving B, or None if the puzzle is unsolvable.",
+          "solution": "```python\ndef solve_tilt(B, t):\n    '''\n    Input: B | Starting board configuration\n    t | Tuple t = (x, y) representing the target square\n    Output: M | List of moves that solves B (or None if B not solvable)\n    '''\n    M = []\n    xt, yt = t\n    P = {B: None}\n    levels = [[B]]\n    while levels[-1]:\n        L = []\n        for B1 in levels[-1]:\n            for d in ('up', 'down', 'left', 'right'):\n                B2 = move(B1, d)\n                if B2 not in P:\n                    P[B2] = (B1, d)\n                    L.append(B2)\n                    if B2[yt][xt] == 'o':\n                        while P[B2]:\n                            B2, d = P[B2]\n                            M.append(d)\n                        M.reverse()\n                        return M\n        levels.append(L)\n    M = None\n    return M\n```",
+          "image_description": "The problem context illustrates a 5-by-5 Tilt board. Black squares are fixed obstacles, circles are sliders, and a gray square is the target. The initial board has obstacles at row 1 column 2, row 2 column 2, and row 5 column 3; the target is at row 3 column 3; and sliders begin at row 1 column 1 and row 5 column 1. The illustrated shortest solution has eight moves: down, right, up, right, right, up, left, down.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS6-5",
+          "source": "AP6.pdf",
+          "source_type": "problem_set",
+          "question": "There are n intersections with positive integer elevations and optional gas stations, and r undirected roads with positive driving times; the average intersection degree is less than 5. Starting at s with a full tank of capacity g<n, LightQueen may buy any integral amount of gas at stations at time tG per unit. Traveling uphill from elevation ei to ej consumes ej−ei gas when ej>ei, while downhill travel uses no gas. Describe an O(n² log n)-time algorithm to find a fastest route from s to t that always keeps a strictly positive amount of gas, or report that none exists.",
+          "solution": "Construct a state graph G. For every intersection v and each gas amount i∈{1,…,g}, create state vi, meaning that LightQueen is at v with i units of gas.\n\nFor each road {u,v} with driving time t(u,v), assume e(u)≤e(v):\n• Add downhill edges vi→ui of weight t(u,v) for all i∈{1,…,g}.\n• If e(u)=e(v), add ui→vi of weight t(u,v) for all i.\n• Otherwise, let ℓ=e(v)−e(u)>0. Add uphill edges ui→v(i−ℓ) of weight t(u,v) for i∈{ℓ+1,…,g}. Starting from i≥ℓ+1 ensures that gas remains strictly positive after the trip.\n• At every gas-station intersection v, add refill edges vi→v(i+1) of weight tG for i∈{1,…,g−1}.\n\nRun Dijkstra from sg. Return the minimum-weight path to any state ti, i∈{1,…,g}; if none is reachable, report that no valid route exists. State-graph paths correspond exactly to valid routes, and their weights equal driving plus refueling time.\n\nThere are gn vertices and O(g(r+n)) edges. Since average degree is less than 5, r=O(n), and since g<n, the graph has O(n²) vertices and edges. Construction takes O(n²), and Dijkstra takes O(n² log n).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS7-3",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "A connected undirected sewer network has n positive-length pipes, maximum junction degree 4, and some junctions containing identical motion sensors. Given an entrance junction s and destination junction t, describe an O(n log n)-time algorithm to return an s-to-t pipe path that stays as far from any sensor as possible, despite not knowing sensor sensitivity.",
+          "solution": "Model the sewer network as an undirected weighted graph G. Add an auxiliary vertex x connected by zero-weight edges to every sensor junction, then run Dijkstra from x. Each resulting δ(x,v) is v's distance to its nearest sensor, in O(n log n) time because the bounded-degree graph has O(n) edges and vertices. For a threshold k, let G_k contain only vertices whose nearest-sensor distance is strictly greater than k. A feasible route at sensitivity k exists exactly when s and t are connected in G_k. Sort the vertex sensor distances, then binary-search these sorted threshold values; each connectivity test constructs the corresponding subgraph and runs BFS or DFS in O(n), for O(n log n) total. If d* is the smallest threshold at which t is unreachable from s, take k*=d*−1 and use BFS or DFS with parent pointers to return a path in G_{k*}. If k*=0, every s-to-t path passes through a sensor junction, so any s-to-t path can be returned.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS7-4",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "In an undirected map of n clearings, each of degree at most 5, every trail t has positive length ℓ_t and positive critter capacity c_t. Ashley begins at Trundle Town with k empty Pocket Spheres and can carry at most k. Traversing a trail requires collecting c_t critters using c_t empty spheres; all trail critters respawn whenever she reaches a clearing. At store clearings, she can buy empty spheres and deposit full ones. Describe an O(nk log(nk))-time algorithm that returns her shortest route to Blue Bluff without ever lacking an empty sphere, or reports that sadness is unavoidable.",
+          "solution": "Create a directed state graph with a vertex v_{c,i} for every clearing c and i∈{0,…,k}, representing arrival at c with i empty Pocket Spheres. For each directed traversal of trail t from clearing a to b: if a has no store, add an edge v_{a,i}→v_{b,i-c_t} of weight ℓ_t for every i≥c_t; if a has a store, add an edge v_{a,i}→v_{b,k-c_t} of weight ℓ_t for every i∈{0,…,k}, since filling the backpack with empty spheres before leaving a store is never worse. The graph has O(nk) vertices and edges because each clearing has at most five trails. Run Dijkstra from v_{TrundleTown,k}; any state v_{BlueBluff,i} is an acceptable destination. Store parent pointers to reconstruct the shortest feasible route. If every Blue Bluff state has infinite distance, report that sadness is unavoidable. The running time is O(nk log(nk)).",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Shortest Paths (weighted: Dijkstra / Bellman-Ford)",
+      "questions": [
+        {
+          "question_id": "PS6-1a",
+          "source": "AP6.pdf",
+          "source_type": "problem_set",
+          "question": "For the given acyclic weighted graph G, run DAG Relaxation and Dijkstra's algorithm from vertex a. For each algorithm, list every directed edge in the order in which the algorithm attempts to relax it. Break any vertex-processing or outgoing-adjacency ties alphabetically.",
+          "solution": "DAG Relaxation relaxation order: [(a,b), (a,d), (d,b), (d,e), (b,c), (b,e), (b,f), (e,f), (f,c)].\n\nDijkstra relaxation order: [(a,b), (a,d), (b,c), (b,e), (b,f), (f,c), (e,f), (d,b), (d,e)].",
+          "image_description": "A directed acyclic graph with vertices a, b, c arranged left-to-right on the top row and d, e, f on the bottom row. Its directed edges, as indicated by the relaxation orders, are a→b, a→d, d→b, d→e, b→c, b→e, b→f, e→f, and f→c. The displayed edge weights are nonnegative; visible labels include a→b of weight 2, a→d of weight 6, d→b of weight 0, d→e of weight 2, b→c of weight 1, b→e of weight 3, b→f of weight 2, e→f of weight 1, and f→c of weight 1.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS6-1b",
+          "source": "AP6.pdf",
+          "source_type": "problem_set",
+          "question": "For the given weighted DAG G, list the shortest-path distance δ(a,v) from a for every vertex v in V.",
+          "solution": "The shortest-path distances are:\n\nv: a, b, c, d, e, f\nδ(a,v): 0, 2, 3, 6, 5, 4.",
+          "image_description": "A directed acyclic graph with vertices a, b, c arranged left-to-right on the top row and d, e, f on the bottom row. Its directed edges, as indicated by the relaxation orders, are a→b, a→d, d→b, d→e, b→c, b→e, b→f, e→f, and f→c. The displayed edge weights are nonnegative; visible labels include a→b of weight 2, a→d of weight 6, d→b of weight 0, d→e of weight 2, b→c of weight 1, b→e of weight 3, b→f of weight 2, e→f of weight 1, and f→c of weight 1.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS6-2",
+          "source": "AP6.pdf",
+          "source_type": "problem_set",
+          "question": "Given a weighted directed graph G=(V,E,w) and source s such that, for every vertex v, some minimum-weight path from s to v uses at most k edges, describe an algorithm that computes the shortest-path weight from s to every v in O(|V| + k|E|) time.",
+          "solution": "Use a layer-by-layer version of Bellman-Ford's duplicated graph. Start with layer 0, containing v0 for every v∈V, with distance 0 to s0 and ∞ to all other layer-0 vertices. Incrementally append layer i+1 and edges from layer i to layer i+1 corresponding to all original edges, then relax these new edges. Thus the distance to v in layer i is the minimum weight of an s-to-v path using at most i edges.\n\nStop when every vertex has the same distance in two consecutive layers: δ(s0,vk')=δ(s0,vk'+1) for all v. By the promise, this occurs once k' reaches k, and these values equal the true shortest-path distances. Output the distances in that layer.\n\nAt most k+1 layers are constructed, and processing each layer takes O(|E|), for O(k|E|) time, which is within O(|V|+k|E|). For disconnected input, first run reachability from s and restrict to reachable vertices.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS6-3",
+          "source": "AP6.pdf",
+          "source_type": "problem_set",
+          "question": "Clearings C have integer elevations, and each slope (ci,cj,ℓij) connects two clearings with a strictly monotone trail and positive length. Bames may ski only downhill from lair clearing L to snowmobile clearing S. Dynamite at clearings CD can, if detonated upon reaching clearing D, lower their elevations from ei to known values ei'<ei. Describe an O(n)-time algorithm to find the minimum skiing distance from L to S, possibly detonating the dynamite.",
+          "solution": "Build two DAGs. G1 represents the mountain before detonation: create one vertex per clearing and orient every usable slope toward the lower-elevation endpoint, with its slope length as edge weight. Discard slopes that do not change elevation. Build G2 analogously using the post-detonation elevations ei'.\n\nCombine G1 and G2 by adding a zero-weight edge D1→D2, representing detonating at D. Add a supernode T and zero-weight edges S1→T and S2→T, representing arrival at S without or with detonation. Run DAG Relaxation from L1 to T. A path either stays in G1 (no detonation) or crosses once from D1 to D2 (detonation), and all graph edges respect downhill skiing in the applicable elevation state. Therefore its shortest path is the desired minimum skiing distance.\n\nThe combined graph has O(n) vertices and edges, so DAG Relaxation takes O(n) time.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS6-4",
+          "source": "AP6.pdf",
+          "source_type": "problem_set",
+          "question": "A discrete directed force field has n locations and O(n) transitions (ℓi,ℓj,wij), where wij is positive or negative integer work. A field is conservative if total work is zero on every closed loop. Describe an O(n²)-time algorithm to determine whether the field is conservative.",
+          "solution": "Construct a directed weighted graph with one vertex per location and one edge ℓi→ℓj of weight wij per transition. Add a supernode s with zero-weight edges to all vertices, so every component is reachable and no new cycles are introduced.\n\nRun Bellman-Ford from s. If it detects a negative-weight cycle, the field is not conservative. Negate every original edge weight and run Bellman-Ford again. A negative cycle in the negated graph is a positive-weight cycle in the original graph, so this also proves the field is not conservative. If neither run finds a negative cycle, the original graph has neither positive- nor negative-weight cycles; hence every cycle has total weight zero and the field is conservative.\n\nThe graph has O(n) vertices and edges, and each Bellman-Ford run takes O(n²), so the total time is O(n²).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS6-6",
+          "source": "AP6.pdf",
+          "source_type": "problem_set",
+          "question": "Implement johnson(n,S) for a directed weighted graph with vertices 0,…,n−1 and edge triples (u,v,w). Return a length-n tuple D of length-n tuples such that D[u][v]=δ(u,v), or return None if the graph has a negative-weight cycle. The provided template includes Bellman-Ford and binary-heap Dijkstra.",
+          "solution": "The provided solution constructs an adjacency list and weight dictionary; adds a supernode n with zero-weight edges to all original vertices; runs Bellman-Ford from the supernode; returns None if Bellman-Ford detects a negative cycle; uses the returned potential h to reweight edges; runs Dijkstra from each original vertex; and converts reweighted distances back to original distances.\n\n```python\nINF = 99999 # distance magnitudes will not be larger than this number\n\ndef johnson(n, S):\n    D = [[INF for _ in range(n)] for _ in range(n)]\n    Adj = [[] for _ in range(n)] # construct graph\n    W = {}\n    for (u, v, w) in S:\n        Adj[u].append(v)\n        W[(u, v)] = w\n    Adj.append([i for i in range(n)]) # run bellman-ford from supernode\n    for i in range(n):\n        W[(n, i)] = 0\n    def wf(u, v): return W[(u, v)]\n    args = bellman_ford(Adj, wf, n)\n    if args is None:\n        return None\n    h, _ = args\n    def wf(u, v): return W[(u, v)] + h[u] - h[v]\n    for u in range(n): # compute SSSP on reweighted graph\n        d, parent = dijkstra(Adj, wf, u)\n        for v in range(n):\n            if d[v] < INF:\n                D[u][v] = d[v] - h[u] + h[v]\n    return tuple(tuple(row) for row in D)\n```",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS7-1a",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "Run Dijkstra's algorithm from source vertex s on the given directed weighted graph with V = {a,b,c,d,e,f,g,h,s}. Report (1) δ(s,v) for every vertex and (2) the order in which vertices are removed from Dijkstra's queue.",
+          "solution": "δ(s,a)=8, δ(s,b)=9, δ(s,c)=7, δ(s,d)=8, δ(s,e)=11, δ(s,f)=∞, δ(s,g)=12, δ(s,h)=10, and δ(s,s)=0. The removal order (numbered 1 through 9) is s, c, a, d, b, h, e, g, f. Vertices are processed in increasing order of shortest-path distance. Although a and d both have distance 8, d is reachable only through a, so a must be processed first.",
+          "image_description": "A directed weighted graph with vertices arranged in three rows: top row s, a, b; middle row c, d, e; bottom row f, g, h. Directed edges are: s→a (8), s→c (7), c→s (1), a→d (0), c→d (4), d→b (1), b→a (0), b→e (3), d→h (2), h→e (1), h→g (2), g→d (1), g→c (0), and f→g (0). Vertex f has no incoming path from s.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS7-1b",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "Change the weight of edge (g,c) to −6. Identify a vertex v whose shortest-path estimate would be changed while v is no longer in Dijkstra's queue when Dijkstra is run from s as in part (a).",
+          "solution": "Vertex c. The queue-removal order remains as in part (a), but when g is removed, c has already been removed from the queue. Relaxing (g,c) changes c's estimate from 7 to 6 even though c is no longer in the queue.",
+          "image_description": "Uses the directed graph from part (a), with the edge g→c changed from weight 0 to weight −6.",
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS7-2",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "Given a weighted directed graph G=(V,E), possibly with negative edge weights but no negative-weight cycle, describe an O(|V|^3)-time algorithm to compute its weighted radius R(G)=min_u max_v δ(u,v).",
+          "solution": "Use Johnson's algorithm to compute all-pairs shortest-path distances δ(a,b) in O(|V||E| + |V|^2 log|V|)=O(|V|^3) time. For each vertex u, compute its eccentricity ε(u)=max_v δ(u,v) by scanning its distance row in O(|V|) time, for O(|V|^2) total. Return the minimum eccentricity over all u, requiring O(|V|) additional time. Correctness follows because Johnson's computes all finite shortest-path distances when there are no negative cycles, and the remaining steps directly implement the definitions of eccentricity and radius. Floyd–Warshall combined with Bellman–Ford is noted as an alternative.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS7-5b",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "There are n directed trucking routes r_i=(s_i,t_i,w_i,c_i), with positive truck capacity w_i and fixed positive cost c_i. Assuming fewer than 3√n cities occur among the routes and that some finite weight can be shipped from San Francisco to Cambridge, describe an O(n)-time algorithm returning (1) the largest single-server weight w* shippable from San Francisco to Cambridge and (2) the minimum cost of shipping a server of weight w*.",
+          "solution": "First compute w* as the maximum bottleneck from San Francisco s to Cambridge t in the graph whose edge weights are route capacities. Use a Dijkstra-style algorithm with a maximum-priority queue: initialize b_s(s)=∞ and b_s(v)=0 for all other vertices; repeatedly remove the vertex of maximum estimate; and relax capacity edge (u,v) of weight w_i using b_s(v)=max(b_s(v),min(b_s(u),w_i)). When t is removed/completed, b_s(t)=b(s,t)=w*. This is correct by the same settling argument as Dijkstra, adapted to bottleneck estimates. Then retain only routes with capacity at least w*, weight them by their shipping costs c_i, and run ordinary Dijkstra from s to find the minimum cost to t. Each graph has n edges and O(√n) vertices; with a direct-access array or hash-table priority queue, each Dijkstra run takes O(n), so the total is O(n).",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS7-5c",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "Write a Python function ship_server_stats(R, s, t) implementing the algorithm from part (b).",
+          "solution": "The provided code defines: (1) dijkstra(Adj,w,s), ordinary Dijkstra implemented with a direct-access list queue and linear scan for the minimum-distance queued vertex; (2) dijkstra_bottleneck(Adj,w,s), which instead initializes the source to infinity, extracts the maximum bottleneck estimate, and relaxes with max(d[v], min(d[u], w(u,v))); and (3) ship_server_stats(R,s,t). The function maps city names to integer indices, builds adjacency lists and dictionaries for capacity and cost, computes the maximum bottleneck w using dijkstra_bottleneck, assigns infinite cost to every edge whose capacity is less than w, runs ordinary dijkstra using the resulting costs, and returns (w,c), where c is the minimum cost to t.\n\nProvided implementation:\n```python\ndef dijkstra(Adj, w, s):\n    d = [float('inf') for _ in Adj]\n    d[s] = 0\n    Q = [i for i in range(len(Adj))]\n    while len(Q) > 0:\n        u = Q[0]\n        for v in Q:\n            if d[v] < d[u]:\n                u = v\n        Q.remove(u)\n        for v in Adj[u]:\n            d[v] = min(d[v], d[u] + w(u, v))\n    return d\n\ndef dijkstra_bottleneck(Adj, w, s):\n    d = [0 for _ in Adj]\n    d[s] = float('inf')\n    Q = [i for i in range(len(Adj))]\n    while len(Q) > 0:\n        u = Q[0]\n        for v in Q:\n            if d[v] > d[u]:\n                u = v\n        Q.remove(u)\n        for v in Adj[u]:\n            d[v] = max(d[v], min(d[u], w(u, v)))\n    return d\n\ndef ship_server_stats(R, s, t):\n    n = 0\n    city_idx = {}\n    for (_s, _t, _w, _c) in R:\n        for city in (_s, _t):\n            if city not in city_idx:\n                city_idx[city] = n\n                n += 1\n    Adj = [[] for i in range(n)]\n    w_w, w_c = {}, {}\n    for (_s, _t, _w, _c) in R:\n        si, ti = city_idx[_s], city_idx[_t]\n        Adj[si].append(ti)\n        w_w[(si, ti)], w_c[(si, ti)] = _w, _c\n    si, ti = city_idx[s], city_idx[t]\n    w = dijkstra_bottleneck(Adj, lambda u, v: w_w[(u, v)], si)[ti]\n    for i in range(n):\n        for j in Adj[i]:\n            if w_w[(i, j)] < w:\n                w_c[(i, j)] = float('inf')\n    c = dijkstra(Adj, lambda u, v: w_c[(u, v)], si)[ti]\n    return w, c\n```",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Asymptotic Notation & Growth",
+      "questions": [
+        {
+          "question_id": "PS1-1a",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "Order the five functions in part (a) so that any function appearing earlier is O of any function appearing later; group asymptotically equivalent functions in curly braces. The functions are f1 = (log n)^2019, f4 = 2^(0.019n), and f5 = n log n; the remaining displayed expressions are partially garbled in the source text.",
+          "solution": "(f1, f5, f2, f3, f4). The ordering follows from the fact that (log n)^a = o(n^b) for all positive constants a and b, together with standard logarithm and exponentiation manipulations.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS1-1b",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "Order the five functions in part (b) so that any function appearing earlier is O of any function appearing later; group asymptotically equivalent functions in curly braces. The function expressions for this subpart are not present in the parsed source text.",
+          "solution": "({f2, f5}, f3, f1, f4). The solution uses the definition of the binomial coefficient and Stirling’s approximation. In particular, f3 = Θ(2^n/√n), obtained by repeated use of Stirling’s approximation, and it grows slower than f1.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS1-1d",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "Order the five functions in part (d) so that any function appearing earlier is O of any function appearing later; group asymptotically equivalent functions in curly braces. The parsed source shows expressions including 2^n, n^3, n^(n/2), n!, and 3^n, though the formatting is partially garbled.",
+          "solution": "NOT PROVIDED IN SOURCE",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Linked Lists",
+      "questions": [
+        {
+          "question_id": "PS1-4a",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "A linked list contains 2n student names in their original line order. Describe an O(n)-time, O(1)-extra-space algorithm that reverses the last half of the list, without creating new list nodes or non-constant-sized data structures. The first n students remain in order; the final n students are reversed.",
+          "solution": "First find the nth node a; let b be the (n+1)st node. Reverse the next pointers of the last n nodes by maintaining a current node x and its original predecessor xp. Initially x = b and xp = a. At each step, save x.next, set x.next = xp, then advance xp and x. After n iterations, let c be the original final node, now the head of the reversed half. Set a.next = c and b.next = None. Finding the midpoint and reversing n pointers each take O(n), and only a constant number of pointers are used.",
+          "image_description": null,
+          "common_mistakes": null
+        },
+        {
+          "question_id": "PS1-4b",
+          "source": "PP1.pdf",
+          "source_type": "problem_set",
+          "question": "Write a Python function reorder_students(L) implementing the O(n)-time algorithm that reverses the last half of a linked list L containing 2n students.",
+          "solution": "```python\ndef reorder_students(L):\n    n = len(L) // 2  # find the n-th node\n    a = L.head\n    for _ in range(n - 1):\n        a = a.next\n    b = a.next  # relink next pointers of last half\n    x_p, x, x_p = a, b\n    for _ in range(n):\n        x_n = x.next\n        x.next = x_p\n        x_p, x = x, x_n\n    c = x_p\n    a.next = c  # relink front and back of last half\n    b.next = None\n    return\n```",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Greedy Algorithms",
+      "questions": [
+        {
+          "question_id": "PS7-5a",
+          "source": "PP7.pdf",
+          "source_type": "problem_set",
+          "question": "For a weighted directed path, define its bottleneck as its minimum edge weight. Let b(s,t) be the maximum bottleneck among all s-to-t paths, and let I(t) be t's incoming neighbors. Argue that b(s,t) ≥ min(b(s,v),w(v,t)) for every v∈I(t), and that equality holds for at least one v∈I(t).",
+          "solution": "For any incoming neighbor v, take an s-to-v path attaining bottleneck b(s,v) and append edge (v,t). Its bottleneck is min(b(s,v),w(v,t)), so the maximum s-to-t bottleneck b(s,t) is at least that value. For equality for some v, take an s-to-t path whose bottleneck is b(s,t), and let v be the vertex immediately before t. The bottleneck is either the final edge, in which case it equals w(v,t), or lies in the prefix to v, in which case it equals b(s,v). Thus b(s,t)=min(b(s,v),w(v,t)) for that incoming neighbor v.",
+          "image_description": null,
+          "common_mistakes": null
+        }
+      ]
+    },
+    {
+      "topic": "Hashing & Hash Tables",
+      "questions": [
+        {
+          "question_id": "Q2-a",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "For `frequentest_a(X)`, where X is an array of n positive integers with maximum value k, state the worst-case and expected running times. The function uses a Python dictionary (hash table) to count occurrences and return a most frequent integer.",
+          "solution": "Worst-case: O(n^2), because hash-table operations can take O(n) time in the worst case and there are O(n) such operations. Expected: O(n), because the dictionary uses randomly chosen universal hash functions, so its operations take expected O(1) time; `max(X)` also takes O(n) time.",
+          "image_description": null,
+          "common_mistakes": "Saying that performing an O(1)-time operation m times takes amortized O(m) time."
+        },
+        {
+          "question_id": "Q6",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Given three arrays A, B, and C, each with n integers, give an O(n^2)-time algorithm deciding whether there exist a ∈ A, b ∈ B, and c ∈ C such that a + b + c = 0. State whether the running time is worst-case, expected, and/or amortized.",
+          "solution": "Expected-time solution: insert every sum a + b for (a,b) ∈ A × B into a hash table H. For each c ∈ C, return Yes if −c is in H; otherwise return No. A found −c equals some a + b, giving a + b + c = 0. There are O(n^2) pair sums, so this takes expected O(n^2) time.\n\nWorst-case solution: merge-sort A and B. For each c ∈ C, use a two-finger scan of sorted A and B, starting at the beginning of A and end of B, moving one pointer each iteration according to how A[i] + B[j] compares to −c. The scan takes O(n) worst-case time for one c because each pointer moves in only one direction, so repeating for all c takes O(n^2) worst-case time; sorting costs O(n log n).",
+          "image_description": null,
+          "common_mistakes": "Using counting sort, radix sort, or a direct-access array despite no bound on the integer universe; saying n hash-table insertions gives an amortized bound; checking all triples in Ω(n^3) time."
+        }
+      ]
+    },
+    {
+      "topic": "Running-Time Analysis (worst-case / expected / amortized)",
+      "questions": [
+        {
+          "question_id": "Q2-b",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "For `frequentest_b(X)`, where X is an array of n positive integers with maximum value k, state the worst-case and expected running times. The function creates an array of length k + 1, counts occurrences by direct indexing, and returns a most frequent integer.",
+          "solution": "Worst-case: O(n + k). Expected: O(n + k). Computing the maximum and scanning X take O(n), while appending k + 1 zeroes to the dynamic array takes O(k) total amortized time.",
+          "image_description": null,
+          "common_mistakes": "Saying that performing an O(1)-time operation m times takes amortized O(m) time."
+        }
+      ]
+    },
+    {
+      "topic": "Linear-Time Sorting (counting / radix / bucket)",
+      "questions": [
+        {
+          "question_id": "Q5-a",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Students must be sorted by friend number: the number of the other n − 1 incoming students each student is friends with, computable in O(1) time per student. State and justify the most efficient type of sort.",
+          "solution": "Use counting sort in worst-case O(n) time, since friend numbers are nonnegative integers less than n. Radix sort also achieves the same bound. This is optimal because computing every student's friend number already requires Ω(n) time.",
+          "image_description": null,
+          "common_mistakes": "Using a sorting algorithm that is not O(n)."
+        },
+        {
+          "question_id": "Q5-d",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Students must be sorted by magical lineage: the number of magical ancestors within the previous ⌈3 log n⌉ + 4 generations. Each person has two parents, and a student's lineage value can be computed in O(1) time. State and justify the most efficient type of sort.",
+          "solution": "Use radix sort in worst-case O(n) time. The number of ancestors through g = ⌈3 log n⌉ + 4 generations is bounded by a geometric sum below 2^(g+1), which is polynomial in n (O(n^c) for a constant c > 3 log 2). Thus the lineage values have O(log n) bits and can be radix-sorted in O(n) time. This is optimal because the lineage for every student must be computed.",
+          "image_description": null,
+          "common_mistakes": "Claiming there are only ⌈3 log n⌉ + 4 ancestors rather than O(2^(⌈3 log n⌉ + 4)); claiming 2^(⌈3 log n⌉ + 4) = O(n) and therefore using counting sort."
+        }
+      ]
+    },
+    {
+      "topic": "Sorting Lower Bounds",
+      "questions": [
+        {
+          "question_id": "Q5-b",
+          "source": "d2f9999a0d1176c0c1c0f2ef55f52ad5_MIT6_006S20_q1_sol.pdf",
+          "source_type": "quiz",
+          "question": "Students must be sorted by the total weight of their books. Weights cannot be measured precisely, but a scale compares two sets of books in O(1) time, reporting greater than, less than, or equal. State and justify the most efficient type of sort.",
+          "solution": "Use a worst-case O(n log n) comparison sort, such as merge sort, using the scale as the comparison operation. A scale weighing has only a constant number of outcomes, so the Ω(n log n) comparison-sorting lower bound applies; thus this is optimal.",
+          "image_description": null,
+          "common_mistakes": "Insufficient justification for why O(n log n) is optimal."
+        }
+      ]
+    }
+  ]
+}
