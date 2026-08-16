@@ -230,8 +230,6 @@ rich==15.0.0
 rpds-py==2026.5.1
 ruff==0.15.17
 safetensors==0.8.0
-# Editable install with no version control (sait==0.1.0)
--e /Users/afrahalharbi/Desktop/Imperial/Project/code/SAIT
 scikit-learn==1.9.0
 scipy==1.18.0
 sentence-transformers==5.6.0
