@@ -55,14 +55,31 @@ st.set_page_config(
 # --------------------------------------------------------------------------
 # Layout constants — tune these to taste.
 # --------------------------------------------------------------------------
-CHAT_H = 640     # px, scrolling transcript
-BOARD_H = 600    # px, canvas
+# Only these topics are offered on the opening screen. Each entry is
+# (button label, keywords); a catalog topic is offered under the FIRST entry
+# whose keyword appears in its name, so a topic is never listed twice.
+# Keywords are deliberately narrow — "binary search tree" rather than "bst",
+# which would also drag in "Balanced BSTs" and "Tree/BST Augmentation";
+# "breadth-first" rather than "bfs", which would also match
+# "Shortest Paths (unweighted / BFS)".
+# An entry that matches nothing in the catalog is skipped and reported to the
+# terminal on startup, so a typo here shows up rather than silently vanishing.
+TOPIC_ALLOWLIST = [
+    ("Binary Search Trees",       ("binary search tree",)),
+    ("Graph Representations",     ("graph representation",)),
+    ("Breadth-First Search",      ("breadth-first", "breadth first")),
+    ("Depth-First Search",        ("depth-first", "depth first")),
+    ("Dijkstra's Algorithm",      ("dijkstra",)),
+]
+
+CHAT_H = 640     # px, height of the scrolling transcript.
+BOARD_H = 600    # px, canvas. Both columns scroll with the page, so this is
+                 # purely a question of how much fits on screen at once:
+                 #   1080p (~940px usable) -> 600    1440x900 -> 480    768 -> 380
 
 # st_canvas cannot be responsive — the drawing surface needs a hard pixel width.
-# Rule of thumb: BOARD_W must stay under (browser width - sidebar - 120) * 0.44.
-#   1920px display -> 620 fits    1680 -> 560    1440 -> 470    1280 -> 400
-# Too large just means the board scrolls sideways inside its panel, so err high
-# for your own screen and lower it if you see a horizontal scrollbar.
+# Keep it under the rendered width of the right-hand column, or the board clips:
+#   1920px display -> 620    1680 -> 560    1440 -> 470    1280 -> 400
 BOARD_W = 560
 
 
@@ -175,12 +192,8 @@ div[data-testid="stElementContainer"]:has(> div > .panel-anchor) { display: none
 .stTextArea textarea { border-radius: 8px; font-size: .93rem; }
 [data-testid="stSidebar"] { background: var(--surface); border-right: 1px solid var(--rule); }
 
-/* ---------- the right column tracks the page while you scroll ---------- */
-@media (min-width: 1200px) {
-  div[data-testid="stHorizontalBlock"] > div[data-testid="column"]:last-child {
-    position: sticky; top: 3.5rem; align-self: flex-start;
-  }
-}
+/* ---------- layout ---------- */
+div[data-testid="stHorizontalBlock"] { align-items: flex-start; }
 
 /* ---------- quality floor ---------- */
 :focus-visible { outline: 2px solid var(--marker); outline-offset: 2px; }
@@ -189,7 +202,6 @@ div[data-testid="stElementContainer"]:has(> div > .panel-anchor) { display: none
 """
 
 st.markdown(THEME_CSS, unsafe_allow_html=True)
-
 
 def anchor(name: str) -> None:
     """Drop an invisible marker so CSS can scope styles to a specific panel."""
@@ -289,8 +301,8 @@ def content_to_text(content) -> str:
 with st.sidebar:
     st.markdown(
         '<div class="masthead" style="border:none;padding:0;margin-bottom:1rem">'
-        '<div class="eyebrow">Socratic method</div>'
-        '<h1 style="font-size:1.3rem">Algorithms Tutor</h1>'
+        # '<div class="eyebrow">Socratic method</div>'
+        '<h1 style="font-size:1.3rem">SAIT Tutor</h1>'
         "</div>",
         unsafe_allow_html=True,
     )
@@ -312,24 +324,27 @@ with st.sidebar:
 
 
 # --------------------------------------------------------------------------
-# Masthead, then two columns: chat (left) + persistent whiteboard (right)
+# Masthead, then the chat column
 # --------------------------------------------------------------------------
+
 st.markdown(
     '<div class="masthead">'
     '<div class="eyebrow">Guided practice · your lecture notes</div>'
     "<h1>Socratic Algorithms Tutor</h1>"
-    "<p>Think out loud, sketch your working, and get questions back instead of answers.</p>"
+    "<p>Start by choosing a topic from the following options: </p>"
     "</div>",
     unsafe_allow_html=True,
 )
 
 chat_col, board_col = st.columns([5, 4], gap="large")
 
-# ---- Whiteboard (rendered first so canvas_result is available below) ----
+# ---- Whiteboard (rendered before the chat so canvas_result is ready for the
+# composer chip and the submit handler further down) --------------------------
 with board_col:
     with st.container(border=True):
         anchor("panel-board")
-        st.markdown('<div class="tray-label">Whiteboard</div>', unsafe_allow_html=True)
+        st.markdown('<div class="tray-label">Whiteboard</div>',
+                    unsafe_allow_html=True)
 
         tool_col, pen_col, clear_col = st.columns([5, 2, 2], vertical_alignment="center")
         with tool_col:
@@ -389,26 +404,26 @@ with board_col:
 
 # ---- Chat ----
 with chat_col:
-    # Fixed-height scrolling transcript: the conversation scrolls INSIDE this box,
-    # so the page itself doesn't grow — which keeps the whiteboard column in place.
+    # Fixed-height scrolling transcript: the conversation scrolls INSIDE this box
+    # rather than growing the page.
     history = st.container(height=CHAT_H, border=True)
     with history:
         anchor("panel-chat")
 
         student_has_spoken = any(m["role"] == "user" for m in st.session_state.messages)
 
-        if not st.session_state.messages:
-            st.markdown(
-                '<div class="welcome">'
-                "<h2>Where are you stuck?</h2>"
-                "<p>I teach by asking questions — I won't hand over the answer. "
-                "Describe a problem in your own words, tell me where your reasoning "
-                "broke down, or sketch your working on the board and send it for "
-                "feedback. The board keeps its strokes between turns, so you can "
-                "keep refining.</p>"
-                "</div>",
-                unsafe_allow_html=True,
-            )
+        # if not st.session_state.messages:
+        #     st.markdown(
+        #         '<div class="welcome">'
+        #         "<h2>Start with a topic</h2>"
+        #     #     "<p>I teach by asking questions — I won't hand over the answer. "
+        #     #     "Describe a problem in your own words, tell me where your reasoning "
+        #     #     "broke down, or sketch your working on the board and send it for "
+        #     #     "feedback. The board keeps its strokes between turns, so you can "
+        #     #     "keep refining.</p>"
+        #         "</div>",
+        #         unsafe_allow_html=True,
+        #     )
 
         # --- Opening topic buttons ---------------------------------------
         # Shown only before the student's first turn. A pick opens a catalogued
@@ -416,19 +431,53 @@ with chat_col:
         # first attempt and skips its identification call. The grid is built from
         # the catalog, so it widens as you fill in the remaining questions.
         if catalog is not None and not student_has_spoken:
-            st.markdown('<div class="section-label">Or start with a topic</div>',
-                        unsafe_allow_html=True)
             topics = catalog.topics_all()
+            names = list(topics)
+
+            # Keep only the allowlisted topics, in the order listed above.
+            offered, claimed, missing = [], set(), []
+            for label, keywords in TOPIC_ALLOWLIST:
+                members = [
+                    n for n in names
+                    if n not in claimed and any(k in n.lower() for k in keywords)
+                ]
+                if members:
+                    claimed.update(members)
+                    offered.append((label, members))
+                else:
+                    missing.append(label)
+            if missing:
+                # Terminal only — the student shouldn't see the app's plumbing.
+                print(f"[app] not in the misconception catalog, so not offered: "
+                      f"{', '.join(missing)}")
+
+            usable = set(catalog.usable_question_ids())
+
+            st.markdown('<div class="section-label"></div>',
+                        unsafe_allow_html=True)
             cols = st.columns(2)
-            for i, topic in enumerate(topics):
-                starter = topics[topic][0]
-                if cols[i % 2].button(topic, key=f"topic-{starter}", use_container_width=True):
-                    # Defer the actual send to the unified handler below.
-                    st.session_state["_pending_qid"] = starter
+            for i, (label, members) in enumerate(offered):
+                # Open any one of the topic's problems, so clicking the same
+                # button twice doesn't always serve the same question.
+                pool = [q for t in members for q in topics[t] if q in usable]
+                if not pool:
+                    pool = [topics[members[0]][0]]
+                if cols[i % 2].button(
+                    label,
+                    key=f"group-{label}",
+                    use_container_width=True,
+                    help="Covers: " + ", ".join(members),
+                ):
+                    st.session_state["_pending_qid"] = random.choice(pool)
+
             # Finding #8 — offer, don't mandate: one tap lets the tutor choose.
-            if st.button("Pick one for me", use_container_width=True):
+            if offered and st.button("Pick one for me", use_container_width=True):
+                # Drawn from the offered topics only — otherwise this quietly
+                # hands back the whole catalog the allowlist just filtered out.
+                anywhere = [q for _, members in offered for t in members
+                            for q in topics[t] if q in usable]
                 st.session_state["_pending_qid"] = random.choice(
-                    catalog.usable_question_ids()
+                    anywhere or list(usable)
                 )
 
         for msg in st.session_state.messages:
@@ -460,6 +509,11 @@ with chat_col:
                     "Send", type="primary", use_container_width=True
                 )
 
+        # The handlers below run after both columns, so their spinners and
+        # warnings would otherwise appear at the very bottom of the page, far
+        # from the Send button. Reserve a slot for them here instead.
+        status_slot = st.empty()
+
 
 # --------------------------------------------------------------------------
 # Handle a topic-button pick (opening move only). Unlike the form handler, a
@@ -480,7 +534,7 @@ if pending_qid and catalog is not None:
         st.session_state.messages.append(
             {"role": "user", "text": display, "image": None}
         )
-        with st.spinner("Thinking…"):
+        with status_slot, st.spinner("Thinking…"):
             session = {"configurable": {"thread_id": st.session_state.thread_id}}
             try:
                 # Passing `current_question_id` lets the detector skip its own
@@ -510,7 +564,7 @@ if submitted:
     png = board_png
 
     if not text.strip() and png is None:
-        st.warning("Type a message or draw something first.")
+        status_slot.warning("Type a message or draw something first.")
     else:
         if png is not None:
             parts = []
@@ -533,7 +587,7 @@ if submitted:
                 if png is not None:
                     st.image(png, caption="your sketch", width=280)
 
-        with st.spinner("Thinking…"):
+        with status_slot, st.spinner("Thinking…"):
             session = {"configurable": {"thread_id": st.session_state.thread_id}}
             try:
                 result = agent.invoke(
