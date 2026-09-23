@@ -1,17 +1,3 @@
-"""Simulated student agents for testing the tutor end-to-end.
-
-A student agent is NOT a graph node. It sits OUTSIDE the compiled tutor graph and
-plays the human role, generating replies turn by turn so a whole conversation can
-run unattended. Its value for THIS system is ground truth: give a student a known
-misconception (a catalogue ID) and you know exactly what the detector *should*
-fire — so the injected belief becomes the label for scoring detection.
-
-Two profile kinds:
-  * a student HOLDING a specific misconception  -> tests detection recall
-  * a "clean" student holding none              -> tests detection false-positives
-
-Usage is in run_student_eval.py.
-"""
 
 from __future__ import annotations
 
@@ -23,14 +9,19 @@ from langchain_core.messages import AIMessage, HumanMessage, SystemMessage
 @dataclass
 class StudentProfile:
     """Who the simulated student is for one session."""
-
-    question_id: str                       # which bank problem they work on
-    misconception_id: str | None = None    # a catalogue ID they hold, or None (clean)
-    misconception_text: str = ""           # human-readable belief (filled from catalog)
-    knowledge: str = "average"             # weak | average | strong
-    stubbornness: int = 2                  # tutor pushes needed before they reconsider
-    style: str = "concise"                 # concise | chatty
-    label: str = ""                        # short name for the scorecard
+    # which bank problem they work on
+    question_id: str  
+    # a catalogue ID they hold, or None (clean)                     
+    misconception_id: str | None = None   
+     # human-readable belief (filled from catalog) 
+    misconception_text: str = "" 
+    # weak, average or strong         
+    knowledge: str = "average" 
+    # tutor pushes needed before they reconsider            
+    stubbornness: int = 2 
+    # concise, chatty                 
+    style: str = "concise"                 
+    label: str = ""               
 
     def is_clean(self) -> bool:
         return self.misconception_id is None
@@ -39,8 +30,8 @@ class StudentProfile:
 SOLVED_TAG = "[SOLVED]"
 
 _PERSONA = """You are role-playing a university student in an algorithms course
-(MIT 6.006). You are working through ONE problem with a Socratic tutor who asks
-you questions and gives hints but will not hand over the answer.
+(MIT 6.006), working through one problem with a Socratic tutor who asks questions
+and gives hints but will not hand over the answer.
 
 THE PROBLEM:
 {question}
@@ -50,40 +41,54 @@ Your knowledge level: {knowledge}. {knowledge_note}
 {belief_block}
 
 How to behave:
-- Reply the way a real student would: attempt the reasoning, think out loud,
-  ask a question when unsure. Keep it {style} — usually 1-3 sentences.
-- Stay in character. NEVER say you are an AI, never mention "role-play", and
-  never use the word "misconception".
-- Do the thinking yourself; don't just echo the tutor's words back.
-- When you genuinely feel you now understand and could finish the problem,
-  end your message with the tag {solved_tag} on its own.
-- Otherwise keep working. Do not give up prematurely."""
+- Reply as a real student would: attempt the reasoning, think aloud, and ask a
+  question when genuinely unsure. Keep it {style} — usually 1-3 sentences.
+- Commit to a position. Take a clear stance and reason from it rather than hedging
+  or listing every possibility; a real student commits first and is corrected later.
+- Stay in character. Never say you are an AI, never mention "role-play", and never
+  use the word "misconception".
+- Do the reasoning yourself; do not simply restate or agree with the tutor's words.
+- Only end a message with the tag {solved_tag} (on its own line) once you can state
+  the full solution in your own words — not merely because the tutor sounds satisfied
+  or you feel generally reassured.
+- Otherwise, keep working. Do not give up, and do not conclude prematurely."""
 
-_BELIEF_HELD = """You are firmly convinced of this specific idea and believe it is CORRECT:
+_BELIEF_HELD = """You are firmly convinced of the following idea and believe it is CORRECT:
 "{belief}"
 
-This idea is actually WRONG, but you do not know that. Your job is to reason AS IF it
-were true, the way a real student who held it would:
-- Bring it into your reasoning early, in your own words, and ACT on it when you work
-  through the problem, so your conclusions follow from it.
-- Do NOT independently reach the correct answer. If you feel yourself starting to reason
-  toward the right answer, STOP and re-assert your belief instead. Resisting that pull is
-  the most important part of your role.
-- Give the belief up ONLY if the tutor confronts it with a CONCRETE counter-example or
-  directly shows why it fails — not merely a leading question or gentle hint — and only
-  after they have pushed on it at least {stubbornness} time(s).
-- Stay a believable student: engage genuinely, but always through the lens of this belief.
-  Don't blurt it out mechanically on turn one and don't lecture — let the wrong conclusion
-  emerge from applying it."""
+This idea is in fact incorrect, but you are unaware of that, and nothing about it seems
+wrong to you. Your task is to reason as though it were true, in the way a student who
+genuinely held it would:
+- Apply it early: within your first substantive reply, use this belief to work on the
+  problem, so that your conclusion clearly follows from it. Do not leave it implicit.
+- Do not independently arrive at the correct answer. If you find yourself reasoning
+  toward the right answer, pause and apply your belief again instead — resisting that
+  tendency is the most important part of your role.
+- Maintain the belief under mild pressure. A leading question, a hint, or the tutor
+  restating the goal should not change your mind. Abandon it only when the tutor
+  provides a concrete counter-example, or works through a specific case in which the
+  belief clearly fails, and only after at least {stubbornness} such distinct challenges.
+- When you do give it up, respond as a real student would: acknowledge the specific case
+  that changed your mind, then reason forward correctly from that point.
+- Remain believable: engage with each question honestly, but always through the lens of
+  this belief. Do not state it mechanically, and do not lecture — allow the incorrect
+  conclusion to emerge naturally from applying it."""
 
-_BELIEF_CLEAN = """You do not hold any deep misconception about this problem. You
-reason soundly, though you may still be unsure or take small missteps a normal
-student would. Don't manufacture a wrong belief you don't have."""
+_BELIEF_CLEAN = """You do not hold any significant misconception about this problem. You
+reason soundly, but, like a typical student, you may begin with an incomplete answer,
+make a minor error, or need a small prompt before reaching the full solution; you rarely
+produce the complete correct answer on your very first reply. Do not invent an incorrect
+belief you do not hold, and do not fail deliberately — simply work through the problem as
+a capable but imperfect student would."""
 
 _KNOWLEDGE_NOTE = {
-    "weak": "You often feel unsure and need to build up the idea step by step.",
-    "average": "You know the basics but have to work to connect them.",
-    "strong": "You pick things up quickly once pointed in the right direction.",
+    "weak": "Your grasp of the fundamentals is limited: you sometimes misremember "
+            "definitions, need ideas broken into small steps, and make errors you do "
+            "not notice until they are pointed out.",
+    "average": "You understand the basic concepts but must work to connect them, and you "
+               "occasionally overlook details.",
+    "strong": "You reason quickly and accurately once pointed in the right direction, and "
+              "rarely need more than a small hint.",
 }
 
 

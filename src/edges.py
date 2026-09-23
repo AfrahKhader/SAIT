@@ -1,4 +1,4 @@
-"""Agent components: the edges — i.e. the conditional routing functions.
+"""Agent components: edges
 
 These decide which node the graph moves to next, based on the current state.
 graph.py wires them into `add_conditional_edges`.

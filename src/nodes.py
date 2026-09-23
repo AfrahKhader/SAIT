@@ -67,9 +67,7 @@ class AgentState(TypedDict):
     misconception_history: Annotated[list, operator.add]
 
 
-# --------------------------------------------------------------------------
-# Guardrail
-# --------------------------------------------------------------------------
+# -----------------------------Guardrail-----------------------------
 VALID_VERDICTS = {"ON_TOPIC", "OFF_TOPIC", "INJECTION", "EMPTY"}
 
 
@@ -130,18 +128,18 @@ class GuardrailNode:
 
 # --- Scaffolding: assessment node + support-level ladder ---
 LEVEL_GUIDANCE = {
-    0: "SUPPORT LEVEL 0 (least support): Ask ONE broad, open, conceptual question "
+    0: "SUPPORT LEVEL 0 (least support): Ask one broad, open, conceptual question "
        "that makes the student engage with the underlying idea. Give no hints.",
     1: "SUPPORT LEVEL 1: Narrow the student's attention to the relevant idea with a "
        "focused question. Still do not give the answer.",
     2: "SUPPORT LEVEL 2: Break the problem into a smaller sub-question, or give a "
        "partial scaffold (e.g. state one fact, then ask them to take the next step).",
-    3: "SUPPORT LEVEL 3 (most support): The student is stuck. Reveal ONLY the single "
+    3: "SUPPORT LEVEL 3 (most support): The student is stuck. Reveal only the single "
        "next step, then immediately ask a question that moves them forward. Never "
        "dump the whole solution.",
 }
 
-ASSESS_VERDICTS = {"CORRECT", "PARTIAL", "STUCK", "META"}
+ASSESS_VERDICTS = {"CORRECT", "PARTIAL", "STUCK", "NON_ATTEMPT"}
 
 
 class AssessNode:
@@ -191,7 +189,7 @@ class AssessNode:
             "CORRECT - correct and complete for what was asked\n"
             "PARTIAL - on the right track but incomplete or slightly off\n"
             "STUCK   - wrong, confused, or says they don't know\n"
-            "META    - not an attempt (a question back, or an instruction like "
+            "NON_ATTEMPT    - not an attempt (a question back, or an instruction like "
             "'simpler please')\n"
             "Reply with one word only."
         )
@@ -333,7 +331,7 @@ class MisconceptionNode:
         # overlapping a catalogued misconception. PARTIAL/STUCK still run — that
         # is where misconceptions actually live.
         verdict = state.get("last_verdict", "")
-        if verdict in ("CORRECT", "META"):
+        if verdict in ("CORRECT", "NON_ATTEMPT"):
             print(f"[misconception] SKIP (verdict {verdict})")
             return {
                 "current_question_id": state.get("current_question_id", ""),

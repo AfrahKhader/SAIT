@@ -1,7 +1,6 @@
 """Agent components: the graph — builds nodes, wires edges, compiles the agent.
-
     guardrail --ON_TOPIC--> assess --> misconception --> socratic <--> retriever_agent --> END
-              --blocked---> redirect --> END
+    --blocked---> redirect --> END
 """
 
 from langchain_openai import ChatOpenAI

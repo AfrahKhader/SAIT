@@ -1,8 +1,4 @@
-"""Retrieval infrastructure: builds/loads the Chroma store and its tool.
-
-This is the RAG plumbing (not an agent component), so the vector store and the
-tool that queries it live together here.
-"""
+# """Retrieval infrastructure: builds/loads the Chroma store and its tool.
 
 from __future__ import annotations
 
@@ -41,7 +37,7 @@ class KnowledgeBase:
             raise RuntimeError("KnowledgeBase.build() must be called first.")
         return self.retriever
 
-    # -- internals --------------------------------------------------------
+    # -- ------------------internals -------------------------------------
 
     def _get_vectorstore(self) -> Chroma:
         vs = self.config.vectorstore
