@@ -1,0 +1,12 @@
+
+==============================================================
+DETECTION SCORECARD
+==============================================================
+Catalogued sessions   : 4  (2 expressed the belief, 2 did not)
+Recall (valid only)   : 1/2 = 50%  (held misconception caught)
+Spurious on valid     : 0/2  (also fired an ID the student did NOT hold)
+Excluded (never expressed): 2  -> hash amortized-vs-expected, heap-order vs traversal-order
+   ^ student agent reasoned correctly; rerun with a weaker --student-model or a firmer persona to actually test these.
+Clean false-positives : 1/2  (clean student that triggered anything)
+Reached resolution    : 4/6
+==============================================================

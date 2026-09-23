@@ -1,0 +1,10 @@
+
+==============================================================
+DETECTION SCORECARD
+==============================================================
+Catalogued sessions   : 4  (4 expressed the belief, 0 did not)
+Recall (valid only)   : 2/4 = 50%  (held misconception caught)
+Spurious on valid     : 0/4  (also fired an ID the student did NOT hold)
+Clean false-positives : 1/2  (clean student that triggered anything)
+Reached resolution    : 6/6
+==============================================================

@@ -1,0 +1,141 @@
+Session: hash amortized-vs-expected   (question Q6, held: Q6.M2)
+------------------------------------------------------------
+[guard] ON_TOPIC
+[assess] SKIP -> level 0, attempts 0
+[misconception] Q6 (list) -> none
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 0, attempts 1
+[misconception] Q6 (list) -> Q6.M2
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+
+
+======================================================================
+
+Session: repeated O(1) = amortized O(m)   (question Q2-a, held: AMORT-1)
+------------------------------------------------------------
+[guard] ON_TOPIC
+[assess] SKIP -> level 0, attempts 0
+[misconception] Q2-a (list) -> none
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+
+
+======================================================================
+
+Session: heap-order vs traversal-order   (question Q4-b, held: Q4-b.M1)
+------------------------------------------------------------
+[guard] ON_TOPIC
+[assess] SKIP -> level 0, attempts 0
+[misconception] Q4-b (list) -> none
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 0, attempts 1
+[misconception] Q4-b (list) -> Q4-b.M1
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 0, attempts 2
+[misconception] Q4-b (list) -> Q4-b.M1
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 3, attempts 0
+[misconception] Q4-b (list) -> Q4-b.M1
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 3, attempts 1
+[misconception] Q4-b (list) -> Q4-b.M1
+[guard] ON_TOPIC
+[assess] CORRECT -> level 2, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 2, attempts 1
+[misconception] Q4-b (list) -> none
+[guard] ON_TOPIC
+[assess] CORRECT -> level 1, attempts 0
+[misconception] SKIP (verdict CORRECT)
+
+
+======================================================================
+
+Session: mis-simplifying exp bound   (question Q5-d, held: Q5-d.M2)
+------------------------------------------------------------
+[guard] ON_TOPIC
+[assess] SKIP -> level 0, attempts 0
+[misconception] Q5-d (list) -> none
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 0, attempts 1
+[misconception] dropped Q5-d.M2 (evidence not in reply)
+[misconception] Q5-d (list) -> none
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+
+
+======================================================================
+
+Session: clean / lower bounds   (question Q5-b, held: none / clean)
+------------------------------------------------------------
+[guard] ON_TOPIC
+[assess] SKIP -> level 0, attempts 0
+[misconception] Q5-b (list) -> none
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 0, attempts 1
+[misconception] Q5-b (list) -> Q5-b.M1
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
+
+
+======================================================================
+
+Session: clean / augmentation   (question Q7, held: none / clean)
+------------------------------------------------------------
+[guard] ON_TOPIC
+[assess] SKIP -> level 0, attempts 0
+[misconception] Q7 (list) -> none
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 0, attempts 1
+[misconception] Q7 (list) -> none
+[guard] ON_TOPIC
+[assess] PARTIAL -> level 0, attempts 2
+[misconception] Q7 (list) -> none
+[guard] ON_TOPIC
+[assess] CORRECT -> level 0, attempts 0
+[misconception] SKIP (verdict CORRECT)
