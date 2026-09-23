@@ -52,18 +52,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# --------------------------------------------------------------------------
-# Layout constants — tune these to taste.
-# --------------------------------------------------------------------------
-# Only these topics are offered on the opening screen. Each entry is
-# (button label, keywords); a catalog topic is offered under the FIRST entry
-# whose keyword appears in its name, so a topic is never listed twice.
-# Keywords are deliberately narrow — "binary search tree" rather than "bst",
-# which would also drag in "Balanced BSTs" and "Tree/BST Augmentation";
-# "breadth-first" rather than "bfs", which would also match
-# "Shortest Paths (unweighted / BFS)".
-# An entry that matches nothing in the catalog is skipped and reported to the
-# terminal on startup, so a typo here shows up rather than silently vanishing.
+
 TOPIC_ALLOWLIST = [
     ("Binary Search Trees",       ("binary search tree",)),
     ("Graph Representations",     ("graph representation",)),
@@ -72,20 +61,12 @@ TOPIC_ALLOWLIST = [
     ("Dijkstra's Algorithm",      ("dijkstra",)),
 ]
 
-CHAT_H = 640     # px, height of the scrolling transcript.
-BOARD_H = 600    # px, canvas. Both columns scroll with the page, so this is
-                 # purely a question of how much fits on screen at once:
-                 #   1080p (~940px usable) -> 600    1440x900 -> 480    768 -> 380
+CHAT_H = 640 
+BOARD_H = 600 
 
-# st_canvas cannot be responsive — the drawing surface needs a hard pixel width.
-# Keep it under the rendered width of the right-hand column, or the board clips:
-#   1920px display -> 620    1680 -> 560    1440 -> 470    1280 -> 400
 BOARD_W = 560
 
 
-# --------------------------------------------------------------------------
-# Theme
-# --------------------------------------------------------------------------
 THEME_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Newsreader:opsz,wght@6..72,400;6..72,500&family=JetBrains+Mono:wght@400;500&display=swap');
@@ -198,7 +179,9 @@ div[data-testid="stHorizontalBlock"] { align-items: flex-start; }
 /* ---------- quality floor ---------- */
 :focus-visible { outline: 2px solid var(--marker); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
 </style>
+
 """
 
 st.markdown(THEME_CSS, unsafe_allow_html=True)
@@ -218,9 +201,6 @@ def choice_control(label, options, key):
     return st.radio(label, options, horizontal=True, label_visibility="collapsed", key=key)
 
 
-# --------------------------------------------------------------------------
-# Build the agent ONCE (cached across reruns).
-# --------------------------------------------------------------------------
 @st.cache_resource(show_spinner="Loading lecture notes and preparing the tutor…")
 def load_agent():
     config = Config.load()
@@ -250,17 +230,11 @@ if not os.getenv("OPENAI_API_KEY"):
 config, agent, catalog = load_agent()
 
 
-# --------------------------------------------------------------------------
-# Session state
-# --------------------------------------------------------------------------
 st.session_state.setdefault("thread_id", str(uuid.uuid4()))
 st.session_state.setdefault("messages", [])       # [{role, text, image?}]
 st.session_state.setdefault("board_version", 0)   # bump ONLY on explicit "Clear board"
 
 
-# --------------------------------------------------------------------------
-# Helpers
-# --------------------------------------------------------------------------
 def canvas_to_png(canvas_result):
     """Flatten the canvas onto white; return PNG bytes, or None if blank."""
     if canvas_result is None or canvas_result.image_data is None:
@@ -295,9 +269,7 @@ def content_to_text(content) -> str:
     return str(content)
 
 
-# --------------------------------------------------------------------------
-# Sidebar
-# --------------------------------------------------------------------------
+
 with st.sidebar:
     st.markdown(
         '<div class="masthead" style="border:none;padding:0;margin-bottom:1rem">'
@@ -323,9 +295,6 @@ with st.sidebar:
     st.caption(f"Tutor model &nbsp;`{config.llm.tutor_model}`", unsafe_allow_html=True)
 
 
-# --------------------------------------------------------------------------
-# Masthead, then the chat column
-# --------------------------------------------------------------------------
 
 st.markdown(
     '<div class="masthead">'
@@ -338,8 +307,7 @@ st.markdown(
 
 chat_col, board_col = st.columns([5, 4], gap="large")
 
-# ---- Whiteboard (rendered before the chat so canvas_result is ready for the
-# composer chip and the submit handler further down) --------------------------
+
 with board_col:
     with st.container(border=True):
         anchor("panel-board")
@@ -515,11 +483,7 @@ with chat_col:
         status_slot = st.empty()
 
 
-# --------------------------------------------------------------------------
-# Handle a topic-button pick (opening move only). Unlike the form handler, a
-# rerun here is safe — the board is empty at the start, so nothing is lost — and
-# it cleanly removes the topic buttons once the student has "spoken".
-# --------------------------------------------------------------------------
+
 pending_qid = st.session_state.pop("_pending_qid", None)
 if pending_qid and catalog is not None:
     item = catalog.question(pending_qid)
@@ -557,9 +521,6 @@ if pending_qid and catalog is not None:
         st.rerun()   # safe: board empty on the opening move; hides the buttons
 
 
-# --------------------------------------------------------------------------
-# Handle a send (runs after both columns so the canvas + text are ready)
-# --------------------------------------------------------------------------
 if submitted:
     png = board_png
 
