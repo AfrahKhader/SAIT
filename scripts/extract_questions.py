@@ -1,22 +1,4 @@
 #!/usr/bin/env python3
-"""
-Extract algorithms-course questions from PDFs into one topic-grouped JSON file.
-(OpenAI / GPT version, using the Responses API.)
-
-Works on mixed formats (quizzes, exams, problem sets, problem collections). Each
-PDF is sent as an input_file; OpenAI feeds the model both the extracted text and
-the page images, so it can describe figures (graphs, trees, boards). Output is
-forced into a fixed schema via Structured Outputs (strict json_schema), then
-grouped by topic.
-
-Usage:
-    pip install openai pypdf
-    export OPENAI_API_KEY=sk-...
-
-    python extract_questions.py --input ./pdfs --output questions.json --course "MIT 6.006"
-    python extract_questions.py --input quiz1.pdf                    # single file
-    python extract_questions.py --input ./pdfs --dry-run            # no API key needed; shows plan
-"""
 import argparse
 import base64
 import glob
@@ -27,21 +9,23 @@ import sys
 import time
 from collections import OrderedDict
 
-# ---------------------------------------------------------------------------
-# Settings
-# ---------------------------------------------------------------------------
-# gpt-5.6-terra: balances intelligence and cost, has vision (needed for figures).
-# Alternatives: "gpt-5.6-sol" (flagship, messy scans) or "gpt-5.6-luna" (cheapest).
+# -------------------------Settings------------------------------------------
+# gpt-5.6-terra: balances intelligence and cost, has vision (needed for figures)
 MODEL = os.environ.get("EXTRACTOR_MODEL", "gpt-5.6-terra")
-REASONING_EFFORT = os.environ.get("EXTRACTOR_EFFORT", "medium")  # none/low/medium/high/xhigh/max
+# none/low/medium/high/xhigh/max
+REASONING_EFFORT = os.environ.get("EXTRACTOR_EFFORT", "medium")  
 MAX_OUTPUT_TOKENS = 16000
-PDF_DETAIL = "high"       # page-image detail for figures; "low" is cheaper
-PAGES_PER_CHUNK = 40      # keep each call focused; also avoids giant single requests
-CHUNK_OVERLAP = 1         # avoid losing a problem split across a boundary; dups removed by id
-MAX_INLINE_MB = 50        # OpenAI request limit is 50 MB per file; above this use the Files API
+# page image detail for figures
+PDF_DETAIL = "high"  
+# keep each call focused    
+PAGES_PER_CHUNK = 40 
+# avoid losing a problem split across a boundary     
+CHUNK_OVERLAP = 1 
+# OpenAI request limit is 50 MB per file        
+MAX_INLINE_MB = 50        
 MAX_RETRIES = 3
 
-# Canonical topics — EDIT to match your syllabus. Extraction is biased toward these.
+# Extraction is biased toward these topics
 CANONICAL_TOPICS = [
     "Asymptotic Notation & Growth", "Recurrences & the Master Theorem",
     "Running-Time Analysis (worst-case / expected / amortized)",
@@ -85,9 +69,9 @@ IMAGE_DESCRIPTION: if the question or solution has a figure, describe precisely 
 you see, grounded in the text (label vertices/edges, tree parent-child structure, \
 board layout, axes). If there is no figure, set it to null. Never fabricate a figure.
 
-COMMON_MISTAKES: set ONLY when the document explicitly gives instructor-written \
-common mistakes/pitfalls for THAT question (often labeled "Common Mistakes"); \
-summarize them. Otherwise null. NEVER invent. Grading rubrics are NOT common mistakes.
+COMMON_MISTAKES: set only when the document explicitly gives instructor-written \
+common mistakes/pitfalls for that question (often labeled "Common Mistakes"); \
+summarize them. Otherwise null. never invent. Grading rubrics are not common mistakes.
 
 TOPIC: short label; strongly prefer one of these canonical topics when it fits:
 {taxonomy}
@@ -95,8 +79,7 @@ If nothing fits, write a concise new topic name.
 
 Be accurate over comprehensive."""
 
-# Strict Structured-Outputs schema. Strict mode requires: every property listed in
-# "required", additionalProperties:false, and nullable fields typed as ["string","null"].
+# strict structured outputs schema
 SCHEMA = {
     "type": "object",
     "additionalProperties": False,
@@ -127,9 +110,7 @@ SCHEMA = {
 }
 
 
-# ---------------------------------------------------------------------------
-# PDF helpers
-# ---------------------------------------------------------------------------
+# --------------------------------PDF helpers------------------------------------------
 def iter_chunks(path):
     """Yield (label, base64_pdf). Small PDFs -> one chunk; large PDFs -> overlapping
     page ranges so no problem is lost at a boundary."""
@@ -168,9 +149,7 @@ def page_count(path):
     return len(PdfReader(path).pages)
 
 
-# ---------------------------------------------------------------------------
-# OpenAI call
-# ---------------------------------------------------------------------------
+# ------------------------------------------OpenAI call------------------------------------------
 def extract_chunk(client, filename, pdf_b64, chunk_note, usage):
     system = SYSTEM_PROMPT.format(taxonomy="\n".join(f"- {t}" for t in CANONICAL_TOPICS))
     user_text = "Extract all questions from this document following the rules."
@@ -209,10 +188,10 @@ def extract_chunk(client, filename, pdf_b64, chunk_note, usage):
                 raise RuntimeError(f"incomplete response ({reason}); raise MAX_OUTPUT_TOKENS "
                                    "or lower PAGES_PER_CHUNK")
 
-            # Strict Structured Outputs guarantees schema-valid JSON in output_text.
+            # Strict Structured Outputs guarantees schema valid JSON in output_text
             return json.loads(resp.output_text)
 
-        except Exception as e:  # noqa: BLE001
+        except Exception as e: 
             if attempt == MAX_RETRIES:
                 raise
             time.sleep(2.0 * 2 ** (attempt - 1))
@@ -227,9 +206,6 @@ def clean(q):
     return q
 
 
-# ---------------------------------------------------------------------------
-# Orchestration
-# ---------------------------------------------------------------------------
 def extract_pdf(client, path, usage):
     fname = os.path.basename(path)
     chunks = list(iter_chunks(path))
